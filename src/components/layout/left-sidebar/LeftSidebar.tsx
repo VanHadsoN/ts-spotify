@@ -6,7 +6,7 @@ export function LeftSidebar() {
 
         <Menu items={MENU_ITEMS} />
 
-        <hr />
+        <hr className="my-10 border-player-bg" />
 
         <Menu items={LIBRARY_MENU_ITEMS} title="Your Library" />
 
