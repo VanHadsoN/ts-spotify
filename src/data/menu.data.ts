@@ -1,15 +1,19 @@
 import {PagesConfig} from "../config/pages.config.ts";
+import { Home, Compass, Radio } from "lucide-react"
 
 export const MENU_ITEMS = [
     {
+        icon: Home,
         name: 'Home',
         link: PagesConfig.HOME
     },
     {
+        icon: Compass,
         name: 'Discover',
         link: PagesConfig.DISCOVER
     },
     {
+        icon: Radio,
         name: 'Radio',
         link: PagesConfig.RADIO
     }
