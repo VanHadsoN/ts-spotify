@@ -5,9 +5,9 @@ import {LeftSidebar} from "@/components/layout/left-sidebar/LeftSidebar.tsx";
 export default function Layout ({ children }: PropsWithChildren<unknown>) {
 
     return (
-        <div className='h-full grid grid-cols-[1fr_3.5fr_1.2fr]'>
+        <div className='min-h-screen h-full grid grid-cols-[1fr_4fr_1.2fr]'>
             <LeftSidebar />
-            <main className='py-6 px-4'>
+            <main className='p-layout'>
                 {children}
             </main>
             <RightSidebar />
