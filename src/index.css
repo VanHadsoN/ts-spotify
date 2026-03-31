@@ -23,6 +23,10 @@
   --color-bg: #222327;
   --color-bg-secondary: #25262C;
   --color-player-bg: #2F3034;
+
+  --text-xxs: 0.7rem;
+
+  --spacing-layout: 1.5rem;
 }
 
 a {
