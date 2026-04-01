@@ -10,7 +10,7 @@ export function Menu({items, title}: Props) {
         {title && <div className="opacity-60 text-xxs uppercase font-medium mb-5">{title}</div>}
         <ul>
             {items.map((item) => (
-                <li>
+                <li key={item.name}>
                     <a className="flex gap-3 items-center mb-5 group"
                        href="#"
                     >
