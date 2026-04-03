@@ -20,7 +20,6 @@ export function Lyrics() {
                 I'm in heat, I'm in love</p>
             <p>But I just couldn't tell her so</p>
             <br />
-            <br />
             <div>[ Chorus ]</div>
             <p>I said, train kept a-rolling all night long</p>
             <p>Train kept a-rolling all night long</p>
@@ -29,13 +28,11 @@ export function Lyrics() {
             <p>With a heave, and a ho</p>
             <p>But I just couldn't tell her so, no, no, no</p>
             <br />
-            <br />
             <div>[ Bridge ]</div>
             <p>Well, get along, sweet little woman, get along</p>
             <p>On your way, get along, sweet little woman, get along</p>
             <p>On your way, I'm in heat, I'm in love</p>
             <p>But I just couldn't tell her so, no, no, no</p>
-            <br />
             <br />
             <div>[ Verse 2 ]</div>
             <p>Yeah, train, I met a dame</p>
