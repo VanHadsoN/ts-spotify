@@ -7,7 +7,7 @@ import './App.css'
 function App() {
   return (
       <div>
-        <img src="" alt="" />
+        <img src="/banner.png" alt="" />
       </div>
   )
 }
