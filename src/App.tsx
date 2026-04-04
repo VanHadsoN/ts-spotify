@@ -1,12 +1,10 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
+import {SearchField} from "@/components/elements/search-field/SearchField.tsx";
 
 function App() {
   return (
       <div>
+          <SearchField />
         <img src="/banner.png" alt="" />
       </div>
   )
