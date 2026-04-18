@@ -7,7 +7,7 @@ interface Props {
 export function Track({track}: Props) {
     return <div>
 
-        <img src={track} alt=""/>
+        <Mp3CoverPreview file={track.file} alt=""/>
 
     </div>
 }
