@@ -1,12 +1,14 @@
 import './App.css'
 import {SearchField} from "@/components/elements/search-field/SearchField.tsx";
 import {Play} from "lucide-react";
+import {TRACKS} from "@/data/tracks.data.ts";
+import {Track} from "@/components/elements/track-item/Track.tsx";
 
 function App() {
   return (
-      <div className="relative">
+      <div>
           <SearchField />
-          <div>
+          <div className="relative">
               <img src="/banner.png" alt="" className="rounded-xl" />
 
               <div className="flex items-center justify-between absolute
@@ -24,11 +26,13 @@ function App() {
           </div>
 
           <div>
-
+              {TRACKS.map(track => (
+                  <Track key={track.name} track={track} />
+              ))}
           </div>
 
       </div>
   )
 }
 
-export default App
+export default App;
