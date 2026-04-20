@@ -1,17 +1,18 @@
 import { makeAutoObservable } from 'mobx';
+import type {ITrack} from "@/types/track.types.ts";
 
 class MusicPlayerStore {
     isPlaying: boolean = false;
-    currentTrack: string | null = null;
+    currentTrack: ITrack | null = null;
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    play(track: string) {
+    play(track: ITrack) {
         this.currentTrack = track;
         this.isPlaying = true;
-        console.log(`Playing track: ${track}`);
+        console.log(`Playing track: ${track.name}`);
     }
 }
 
