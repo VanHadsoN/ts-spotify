@@ -1,9 +1,11 @@
 import { makeAutoObservable } from 'mobx';
 import type {ITrack} from "@/types/track.types.ts";
+import {TRACKS} from "@/data/tracks.data.ts";
 
 class MusicPlayerStore {
     isPlaying: boolean = false;
-    currentTrack: ITrack | null = null;
+    currentTrack: ITrack | null = TRACKS[0];
+    volume: number = 85;
 
     constructor() {
         makeAutoObservable(this);
