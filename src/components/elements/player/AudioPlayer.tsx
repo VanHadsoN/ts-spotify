@@ -8,7 +8,7 @@ interface Props {}
 export function AudioPlayer({}: Props) {
     if (!musicPlayerStore.currentTrack) return null;
 
-    return <div className="w-full py-8 px-10 bg-player-bg
+    return <div className="w-full py-5 px-10 bg-player-bg
             border-t border-white/10
             flex items-center justify-between fixed bottom-0 left-0">
         <TrackInfo
@@ -17,26 +17,34 @@ export function AudioPlayer({}: Props) {
             image={undefined}
         />
 
-        <div>
-            <div>
-                <button>
-                    <SkipBack />
+        <div className="flex items-center gap-8">
+            <div className="flex items-center gap-2.5">
+                <button className="opacity-80 hover:opacity-100 duration-300">
+                    <SkipBack size={20}/>
                 </button>
 
                 <button className="rounded-full bg-gradient-to-r from-[#3C3D41] to-[#444549]
-                p-4 border border-player-bg border-solid duration-300 hover:shadow">
-                    {musicPlayerStore.isPlaying ? <Pause /> : <Play />}
+                p-3 border border-white/5 border-solid duration-300
+                hover:shadow text-primary">
+                    {musicPlayerStore.isPlaying ? (
+                        <Pause size={20}/>
+                        ) : (
+                        <Play
+                            size={20}
+                            className="group-hover:fill-primary"
+                        />
+                    )}
                 </button>
 
-                <button>
-                    <SkipForward />
+                <button className="opacity-80 hover:opacity-100 duration-300">
+                    <SkipForward size={20}/>
                 </button>
             </div>
 
-            <div>
+            <div className="flex items-center gap-2">
                 <span>0:00</span>
                 <input type="range"/>
-                <span>
+                <span className="text-white/50">
                     {transformDuration(musicPlayerStore.currentTrack.duration)}
                 </span>
             </div>
