@@ -43,7 +43,24 @@ export function AudioPlayer({}: Props) {
 
             <div className="flex items-center gap-2">
                 <span>0:00</span>
-                <input type="range"/>
+                <div
+                    className="bg-white/20 w-full rounded relative h-1"
+                >
+                    <div className="absolute top-0 left-0 h-1 rounded bg-gradient-to-r
+                    from-primary to-secondary"
+                         style={{
+                             width:'45%'
+                         }}
+                    />
+                    <input type="range"
+                           min={0}
+                           max={musicPlayerStore.currentTrack.duration}
+                           className=""
+                           onChange={(e) => musicPlayerStore.seek(Number(e.target.value))}
+                           value={musicPlayerStore.currentTime}
+                    />
+                </div>
+
                 <span className="text-white/50">
                     {transformDuration(musicPlayerStore.currentTrack.duration)}
                 </span>

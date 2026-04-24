@@ -6,6 +6,7 @@ class MusicPlayerStore {
     isPlaying: boolean = false;
     currentTrack: ITrack | null = TRACKS[0];
     volume: number = 85;
+    currentTime: number = 0;
 
     constructor() {
         makeAutoObservable(this);
@@ -15,6 +16,10 @@ class MusicPlayerStore {
         this.currentTrack = track;
         this.isPlaying = true;
         console.log(`Playing track: ${track.name}`);
+    }
+
+    seek(time: number) {
+        this.currentTime = time;
     }
 }
 
