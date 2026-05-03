@@ -2,18 +2,30 @@ import {TrackInfo} from "@/components/ui/track-info/TrackInfo";
 import {musicPlayerStore} from "@/store/store";
 import {Pause, Play, SkipBack, SkipForward, Volume, Volume1, Volume2} from "lucide-react";
 import {transformDuration} from "@/utils/transform-duration.ts";
+import { observer } from "mobx-react-lite";
+import { useRef, useEffect } from "react";
 
 interface Props {}
 
-export function AudioPlayer({}: Props) {
-    if (!musicPlayerStore.currentTrack) return null;
+export function AudioPlayerInner({}: Props) {
+    const audioRef = useRef<HTMLAudioElement>(null);
+    // const isDraggingRef = useRef(false);
+
+    const track = musicPlayerStore.currentTrack;
+    if (!track) return null;
+
+    useEffect(() => {
+        musicPlayerStore.resetPlayback?.();
+        const el = audioRef.current;
+        if (el) el.load();
+    }, [track?.file]);
 
     return <div className="w-full py-5 px-10 bg-player-bg
             border-t border-white/10
             flex items-center justify-between fixed bottom-0 left-0">
         <TrackInfo
-            title={musicPlayerStore.currentTrack.name}
-            subTitle={musicPlayerStore.currentTrack.artist.name}
+            title={track.name}
+            subTitle={track.artist.name}
             image={undefined}
         />
 
@@ -49,12 +61,12 @@ export function AudioPlayer({}: Props) {
                     <div className="absolute top-0 left-0 h-1 rounded bg-gradient-to-r
                     from-primary to-secondary"
                          style={{
-                             width:'45%'
+                             width:`${musicPlayerStore.progress}%`
                          }}
                     />
                     <input type="range"
                            min={0}
-                           max={musicPlayerStore.currentTrack.duration}
+                           max={track.duration}
                            className=""
                            onChange={(e) => musicPlayerStore.seek(Number(e.target.value))}
                            value={musicPlayerStore.currentTime}
@@ -62,7 +74,7 @@ export function AudioPlayer({}: Props) {
                 </div>
 
                 <span className="text-white/50">
-                    {transformDuration(musicPlayerStore.currentTrack.duration)}
+                    {transformDuration(track.duration)}
                 </span>
             </div>
 
@@ -79,3 +91,5 @@ export function AudioPlayer({}: Props) {
         </div>
     </div>
 }
+
+export const AudioPlayer = observer(AudioPlayerInner);
