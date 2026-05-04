@@ -7,7 +7,7 @@ export default function Layout ({ children }: PropsWithChildren<unknown>) {
 
     return (
         <>
-            <div className='min-h-screen h-full grid grid-cols-[1fr_4fr_1.1fr]'>
+            <div className='min-h-screen h-full grid grid-cols-[1fr_4fr_1.1fr] pb-20'>
                 <LeftSidebar />
                 <main className='p-12 py-layout'>
                     {children}
