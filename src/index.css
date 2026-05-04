@@ -66,8 +66,7 @@ button {
 }
 
 input[type="range"] {
-  @apply w-full h-1 pointer-events-auto cursor-pointer opacity-0 appearance-none
-  mb-6;
+  @apply w-full h-2 pointer-events-auto cursor-pointer opacity-0 appearance-none absolute left-0 -top-0.5;
 
   appearance: none;
 }
