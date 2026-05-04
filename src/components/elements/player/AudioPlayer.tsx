@@ -22,14 +22,14 @@ export function AudioPlayerInner({}: Props) {
 
     return <div className="w-full py-5 px-10 bg-player-bg
             border-t border-white/10
-            flex items-center justify-between fixed bottom-0 left-0">
+            grid grid-cols-[1fr_5.8fr] fixed bottom-0 left-0">
         <TrackInfo
             title={track.name}
             subTitle={track.artist.name}
             image={undefined}
         />
 
-        <div className="flex items-center gap-8">
+        <div className="grid grid-cols-[1fr_8fr_2fr] gap-8 items-center">
             <div className="flex items-center gap-2.5">
                 <button className="opacity-80 hover:opacity-100 duration-300">
                     <SkipBack size={20}/>
@@ -53,7 +53,7 @@ export function AudioPlayerInner({}: Props) {
                 </button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-5">
                 <span>0:00</span>
                 <div
                     className="bg-white/20 w-full rounded relative h-1"
@@ -78,7 +78,7 @@ export function AudioPlayerInner({}: Props) {
                 </span>
             </div>
 
-            <div>
+            <div className="pl-6">
                 {
                     musicPlayerStore.volume === 0 ? (<Volume />) :
                     musicPlayerStore.volume < 50 ? (<Volume1 />) :
