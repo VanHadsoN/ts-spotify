@@ -1,9 +1,9 @@
 import {TrackInfo} from "@/components/ui/track-info/TrackInfo";
 import {musicPlayerStore} from "@/store/store";
 import {Pause, Play, SkipBack, SkipForward, Volume, Volume1, Volume2} from "lucide-react";
-import {transformDuration} from "@/utils/transform-duration.ts";
 import { observer } from "mobx-react-lite";
 import { useRef, useEffect } from "react";
+import {ProgressBar} from "@/components/ui/progress-bar/ProgressBar.tsx";
 
 interface Props {}
 
@@ -53,30 +53,13 @@ export function AudioPlayerInner({}: Props) {
                 </button>
             </div>
 
-            <div className="flex items-center gap-5">
-                <span>0:00</span>
-                <div
-                    className="bg-white/20 w-full rounded relative h-1"
-                >
-                    <div className="absolute top-0 left-0 h-1 rounded bg-gradient-to-r
-                    from-primary to-secondary"
-                         style={{
-                             width:`${musicPlayerStore.progress}%`
-                         }}
-                    />
-                    <input type="range"
-                           min={0}
-                           max={track.duration}
-                           className=""
-                           onChange={(e) => musicPlayerStore.seek(Number(e.target.value))}
-                           value={musicPlayerStore.currentTime}
-                    />
-                </div>
-
-                <span className="text-white/50">
-                    {transformDuration(track.duration)}
-                </span>
-            </div>
+            {/* ProgressBar */}
+            <ProgressBar
+                currentTime={musicPlayerStore.currentTime}
+                duration={musicPlayerStore.currentTrack?.duration}
+                progress={musicPlayerStore.progress}
+                onSeek={(time: number) => {musicPlayerStore.seek(time)}}
+            />
 
             <div className="pl-6">
                 {
