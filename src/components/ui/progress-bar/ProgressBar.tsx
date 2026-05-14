@@ -6,9 +6,10 @@ interface Props {
     progress: number;
     onSeek: (time: number) => void;
     isTextDisplayed?: boolean;
+    isThumbDisplayed?: boolean;
 }
 
-export function ProgressBar({ currentValue, value, progress, onSeek, isTextDisplayed, }
+export function ProgressBar({ currentValue, value, progress, onSeek, isTextDisplayed, isThumbDisplayed = true }
     : Props) {
     return <div className="flex items-center gap-5">
         {currentValue && isTextDisplayed &&
@@ -27,13 +28,16 @@ export function ProgressBar({ currentValue, value, progress, onSeek, isTextDispl
                  }}
             />
 
-            <div
-                className="w-3.5 h-3.5 bg-secondary rounded-full absolute top-1/2
+            {isThumbDisplayed && (
+                <div
+                    className="w-3.5 h-3.5 bg-secondary rounded-full absolute top-1/2
                         -translate-y-1/2 -translate-x-1/2"
-                style={{
-                    left: `${progress}%`
-                }}
-            />
+                    style={{
+                        left: `${progress}%`
+                    }}
+                />
+            )}
+
             <input type="range"
                    min={0}
                    max={value}

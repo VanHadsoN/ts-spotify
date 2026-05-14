@@ -62,7 +62,7 @@ export function AudioPlayerInner({}: Props) {
                 isTextDisplayed
             />
 
-            <div className="pl-6">
+            <div className="pl-6 max-w-36 grid grid-cols-[1fr_8fr] gap-1 items-center">
                 {
                     musicPlayerStore.volume === 0 ? (<Volume />) :
                     musicPlayerStore.volume < 50 ? (<Volume1 />) :
@@ -75,6 +75,7 @@ export function AudioPlayerInner({}: Props) {
                     value={100}
                     progress={musicPlayerStore.volume}
                     onSeek={(value: number) => {musicPlayerStore.setVolume(value)}}
+                    isTextDisplayed={false}
                 />
             </div>
         </div>
