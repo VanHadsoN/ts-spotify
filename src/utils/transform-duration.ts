@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-
-dayjs.extend(utc);
-export const transformDuration = (duration: number) => dayjs.unix(duration).utc().format('m:ss');
+export const transformDuration = (duration: number) => {
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
