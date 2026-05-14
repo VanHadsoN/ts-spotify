@@ -1,22 +1,19 @@
 import {transformDuration} from "@/utils/transform-duration.ts";
 
 interface Props {
-    currentTime?: number;
-    duration?: number;
+    currentValue: number;
+    value: number;
     progress: number;
     onSeek: (time: number) => void;
+    isTextDisplayed?: boolean;
 }
 
-export function ProgressBar({
-    currentTime,
-    duration,
-    progress,
-    onSeek,
-                            }: Props) {
+export function ProgressBar({ currentValue, value, progress, onSeek, isTextDisplayed, }
+    : Props) {
     return <div className="flex items-center gap-5">
-        {currentTime &&
+        {currentValue && isTextDisplayed &&
             <span className="w-10">
-                    {transformDuration(currentTime)}
+                    {transformDuration(currentValue)}
                 </span>
         }
 
@@ -39,18 +36,16 @@ export function ProgressBar({
             />
             <input type="range"
                    min={0}
-                   max={duration}
+                   max={value}
                    className=""
                    onChange={(e) => onSeek(Number(e.target.value))}
-                   value={currentTime}
+                   value={currentValue}
             />
         </div>
 
-        {duration &&
-            <span className="text-white/50">
-                    {transformDuration(duration)}
-            </span>
-        }
+        {value && currentValue && isTextDisplayed && (
+                <span className="text-white/50">{transformDuration(value)}</span>
+        )}
 
     </div>
 }
