@@ -71,11 +71,10 @@ export function AudioPlayerInner({}: Props) {
                 }
 
                 <ProgressBar
-                    currentValue={musicPlayerStore.currentTime}
-                    value={track.duration}
-                    progress={musicPlayerStore.progress}
-                    onSeek={(time: number) => {musicPlayerStore.seek(time)}}
-                    isTextDisplayed
+                    currentValue={musicPlayerStore.volume}
+                    value={100}
+                    progress={musicPlayerStore.volume}
+                    onSeek={(value: number) => {musicPlayerStore.setVolume(value)}}
                 />
             </div>
         </div>

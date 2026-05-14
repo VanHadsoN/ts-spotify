@@ -30,6 +30,10 @@ class MusicPlayerStore {
         this.currentTime = 0;
         this.progress = 0;
     }
+
+    setVolume(volume: number) {
+        this.volume = volume;
+    }
 }
 
 export const musicPlayerStore = new MusicPlayerStore();
