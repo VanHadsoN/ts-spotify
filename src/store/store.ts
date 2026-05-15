@@ -13,10 +13,12 @@ class MusicPlayerStore {
         makeAutoObservable(this);
     }
 
-    play(track: ITrack) {
+    setTrack(track: ITrack | null) {
         this.currentTrack = track;
-        this.isPlaying = true;
-        console.log(`Playing track: ${track.name}`);
+    }
+
+    togglePlayPause() {
+        this.isPlaying = !this.isPlaying;
     }
 
     seek(time: number) {
