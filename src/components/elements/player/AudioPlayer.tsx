@@ -29,6 +29,15 @@ export function AudioPlayerInner({}: Props) {
             image={undefined}
         />
 
+        <audio
+            ref={audioRef}
+            src={track.file}
+            onTimeUpdate={(e) =>
+                (musicPlayerStore.currentTime = (e.target as HTMLAudioElement).currentTime)
+            }
+            onEnded={() => (musicPlayerStore.isPlaying = false)}
+        />
+
         <div className="grid grid-cols-[1fr_8fr_2fr] gap-8 items-center">
             <div className="flex items-center gap-2.5">
                 <button className="opacity-80 hover:opacity-100 duration-300">
