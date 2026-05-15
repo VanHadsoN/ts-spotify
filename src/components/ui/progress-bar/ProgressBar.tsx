@@ -12,7 +12,7 @@ interface Props {
 export function ProgressBar({ currentValue, value, progress, onSeek, isTextDisplayed, isThumbDisplayed = true }
     : Props) {
     return <div className="flex items-center gap-5">
-        {currentValue && isTextDisplayed &&
+        {isTextDisplayed &&
             <span className="w-10">
                     {transformDuration(currentValue)}
                 </span>
@@ -47,7 +47,7 @@ export function ProgressBar({ currentValue, value, progress, onSeek, isTextDispl
             />
         </div>
 
-        {value && currentValue && isTextDisplayed && (
+        {isTextDisplayed && (
                 <span className="text-white/50">{transformDuration(value)}</span>
         )}
 
