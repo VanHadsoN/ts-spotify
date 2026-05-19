@@ -31,5 +31,12 @@ export const useAudioPlayer = () => {
         }
     }
 
-    return { audioRef, togglePlayPause, onSeek, changeTrack };
+    const setVolume = (volume: number) => {
+        if (!audioRef.current) return;
+
+        audioRef.current.volume = volume / 100;
+        musicPlayerStore.setVolume(volume);
+    }
+
+    return { audioRef, togglePlayPause, onSeek, changeTrack, setVolume };
 }
