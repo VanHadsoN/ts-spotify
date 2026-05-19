@@ -16,5 +16,12 @@ export const useAudioPlayer = () => {
         }
     }
 
-    return { audioRef, togglePlayPause };
+    const onSeek = (time: number) => {
+        if (!audioRef.current) return;
+
+        audioRef.current.currentTime = time;
+        musicPlayerStore.seek(time);
+    }
+
+    return { audioRef, togglePlayPause, onSeek };
 }
