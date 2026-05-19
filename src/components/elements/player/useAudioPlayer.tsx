@@ -23,5 +23,13 @@ export const useAudioPlayer = () => {
         musicPlayerStore.seek(time);
     }
 
-    return { audioRef, togglePlayPause, onSeek };
+    const changeTrack = (type: "prev" | "next") => {
+        musicPlayerStore.changeTrack(type);
+
+        if (audioRef.current && musicPlayerStore.isPlaying) {
+            audioRef.current.play();
+        }
+    }
+
+    return { audioRef, togglePlayPause, onSeek, changeTrack };
 }
