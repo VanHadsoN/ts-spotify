@@ -2,13 +2,14 @@ import {TrackInfo} from "@/components/ui/track-info/TrackInfo";
 import {musicPlayerStore} from "@/store/store";
 import {Pause, Play, SkipBack, SkipForward, Volume, Volume1, Volume2} from "lucide-react";
 import { observer } from "mobx-react-lite";
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 import {ProgressBar} from "@/components/ui/progress-bar/ProgressBar.tsx";
+import {useAudioPlayer} from "@/components/elements/player/useAudioPlayer.tsx";
 
 interface Props {}
 
 export function AudioPlayerInner({}: Props) {
-    const audioRef = useRef<HTMLAudioElement>(null);
+    const { audioRef, togglePlayPause, onSeek, changeTrack, setVolume } = useAudioPlayer();
     // const isDraggingRef = useRef(false);
 
     const track = musicPlayerStore.currentTrack;
@@ -32,9 +33,10 @@ export function AudioPlayerInner({}: Props) {
         <audio
             ref={audioRef}
             src={track.file}
-            onTimeUpdate={(e) =>
-                (musicPlayerStore.currentTime = (e.target as HTMLAudioElement).currentTime)
-            }
+            onTimeUpdate={(e) => {
+                const currentTime = e.currentTarget.currentTime;
+                onSeek(currentTime);
+            }}
             onEnded={() => (musicPlayerStore.isPlaying = false)}
         />
 
