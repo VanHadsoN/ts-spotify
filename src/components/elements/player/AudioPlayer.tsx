@@ -34,8 +34,8 @@ export function AudioPlayerInner({}: Props) {
             ref={audioRef}
             src={track.file}
             onTimeUpdate={(e) => {
-                const currentTime = e.currentTarget.currentTime;
-                onSeek(currentTime);
+                const currentTime = Math.floor(e.currentTarget.currentTime);
+                musicPlayerStore.seek(currentTime);
             }}
             onEnded={() => (musicPlayerStore.isPlaying = false)}
         />
@@ -73,7 +73,7 @@ export function AudioPlayerInner({}: Props) {
                 currentValue={musicPlayerStore.currentTime}
                 value={track.duration}
                 progress={musicPlayerStore.progress}
-                onSeek={(time: number) => {musicPlayerStore.seek(time)}}
+                onSeek={(time: number) => onSeek(time)}
                 isTextDisplayed
             />
 
