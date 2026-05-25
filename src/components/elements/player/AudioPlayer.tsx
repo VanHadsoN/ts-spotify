@@ -19,7 +19,7 @@ export function AudioPlayerInner({}: Props) {
         musicPlayerStore.resetPlayback?.();
         const el = audioRef.current;
         if (el) el.load();
-    }, [track?.file]);
+    }, [track.file]);
 
     return <div className="w-full py-5 px-10 bg-player-bg
             border-t border-white/10
@@ -27,7 +27,7 @@ export function AudioPlayerInner({}: Props) {
         <TrackInfo
             title={track.name}
             subTitle={track.artist.name}
-            image={undefined}
+            image={track.cover}
         />
 
         <audio

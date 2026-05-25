@@ -16,7 +16,7 @@ export function Track({track}: Props) {
                 <TrackInfo
                     title={track.name}
                     subTitle={transformDuration(track.duration)}
-                    image={undefined}
+                    image={track.cover}
                 />
             </div>
             <div className="flex shrink-0 items-center gap-4">
