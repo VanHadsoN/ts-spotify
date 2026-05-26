@@ -17,6 +17,7 @@ export function Track({track}: Props) {
                     title={track.name}
                     subTitle={transformDuration(track.duration)}
                     image={track.cover}
+                    track={track}
                 />
             </div>
             <div className="flex shrink-0 items-center gap-4">
