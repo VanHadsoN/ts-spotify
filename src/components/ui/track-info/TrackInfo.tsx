@@ -14,19 +14,25 @@ export function TrackInfo({ title, subTitle, image, track }: Props) {
             {/* TODO: Circle progress-bar */}
             {/* TODO: Play/pause button when hover title or cover */}
 
-            <button onClick={() => musicPlayerStore.togglePlayPause()}>
+            {track ? (
+                <button onClick={() => musicPlayerStore.setTrack(track)}>
+                    <img
+                        src={image}
+                        alt={title}
+                        className="w-12 h-12 rounded-full"
+                    />
+                </button>
+            ) : (
                 <img
                     src={image}
                     alt={title}
                     className="w-12 h-12 rounded-full"
                 />
-            </button>
+            )}
 
-            <div className="min-w-0 flex-1">
+            <div>
                 <div className="text-lg text-white font-medium">{title}</div>
-                <div className="opacity-65">
-                    {subTitle}
-                </div>
+                <div>{subTitle}</div>
             </div>
         </div>
     )
