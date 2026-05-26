@@ -22,13 +22,17 @@ export const TrackInfo = observer(
                 {/* TODO: Play/pause button when hover title or cover */}
 
                 {track ? (
-                    <button onClick={() => musicPlayerStore.setTrack(track)}>
-                        {isActive && <CircularProgressbar value={musicPlayerStore.progress}/>}
+                    <button
+                        onClick={() => musicPlayerStore.setTrack(track)}
+                        className="block relative"
+                    >
+                        {isActive && <CircularProgressbar value={musicPlayerStore.progress}
+                        className="absolute" />}
 
                         <img
                             src={image}
                             alt={title}
-                            className="w-12 h-12 rounded-full"
+                            className="w-12 h-12 rounded-full m-[0.28rem]"
                         />
                     </button>
                 ) : (
