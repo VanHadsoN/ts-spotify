@@ -26,13 +26,26 @@ export const TrackInfo = observer(
                         onClick={() => musicPlayerStore.setTrack(track)}
                         className="block relative"
                     >
-                        {isActive && <CircularProgressbar value={musicPlayerStore.progress}
-                        className="absolute" />}
+                        {isActive && (
+                            <CircularProgressbar
+                                value={musicPlayerStore.progress}
+                                className="absolute"
+                                strokeWidth={5}
+                                styles={{
+                                    trail: {stroke: '#2E3235'},
+                                    path: {
+                                        stroke: 'var(--color-primary)',
+                                        transition: 'stroke-dashoffset 0.5s ease 0s',
+                                    }
+                                }}
+                                counterClockwise
+                            />
+                        )}
 
                         <img
                             src={image}
                             alt={title}
-                            className="w-12 h-12 rounded-full m-[0.28rem]"
+                            className="w-12 h-12 rounded-full m-1.5"
                         />
                     </button>
                 ) : (
