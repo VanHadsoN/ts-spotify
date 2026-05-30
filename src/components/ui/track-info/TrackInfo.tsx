@@ -1,8 +1,9 @@
-import {musicPlayerStore} from "@/store/store.ts";
-import type {ITrack} from "@/types/track.types.ts";
+import { musicPlayerStore } from "@/store/store.ts";
+import type { ITrack } from "@/types/track.types.ts";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import {observer} from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
+import { Play, Pause } from "lucide-react";
 
 interface Props {
     image: string;
@@ -23,8 +24,14 @@ export const TrackInfo = observer(
 
                 {track ? (
                     <button
-                        onClick={() => musicPlayerStore.setTrack(track)}
-                        className="block relative"
+                        onClick={() => {
+
+                            if (!isActive) {
+                                musicPlayerStore.setTrack(track)
+                            }
+                            musicPlayerStore.togglePlayPause()
+                        }}
+                        className="block relative group"
                     >
                         {isActive && (
                             <CircularProgressbar
@@ -41,6 +48,17 @@ export const TrackInfo = observer(
                                 counterClockwise
                             />
                         )}
+
+                        <button className="absolute inset-0 flex items-center justify-center
+                        group-hover:opacity-100 opacity-0 duration-300">
+                            {!isActive ? (
+                                <Play />
+                            ) : musicPlayerStore.isPlaying ? (
+                                <Pause />
+                            ) : (
+                                <Play />
+                            )}
+                        </button>
 
                         <img
                             src={image}
