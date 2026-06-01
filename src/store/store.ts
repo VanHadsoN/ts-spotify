@@ -21,6 +21,14 @@ class MusicPlayerStore {
         this.isPlaying = !this.isPlaying;
     }
 
+    play() {
+        this.isPlaying = true;
+    }
+
+    pause() {
+        this.isPlaying = false;
+    }
+
     seek(time: number) {
         const duration = this.currentTrack?.duration || 1;
         this.currentTime = time;
