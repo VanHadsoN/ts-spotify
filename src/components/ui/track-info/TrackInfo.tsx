@@ -4,6 +4,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { observer } from "mobx-react-lite";
 import { Play, Pause } from "lucide-react";
+import cn from 'clsx';
 
 interface Props {
     image: string;
@@ -19,8 +20,6 @@ export const TrackInfo = observer(
 
         return (
             <div className="flex items-center gap-3">
-                {/* TODO: Circle progress-bar */}
-                {/* TODO: Play/pause button when hover title or cover */}
 
                 {track ? (
                     <button
@@ -49,8 +48,12 @@ export const TrackInfo = observer(
                             />
                         )}
 
-                        <button className="absolute inset-0 flex items-center justify-center
-                        group-hover:opacity-100 opacity-0 duration-300">
+                        <div
+                            className={cn(
+                                "absolute inset-0 flex items-center justify-center group-hover:opacity-100",
+                                isActive ? "opacity-100" : "opacity-0 duration-300",
+                            )}
+                        >
                             {!isActive ? (
                                 <Play />
                             ) : musicPlayerStore.isPlaying ? (
@@ -58,7 +61,7 @@ export const TrackInfo = observer(
                             ) : (
                                 <Play />
                             )}
-                        </button>
+                        </div>
 
                         <img
                             src={image}
