@@ -79,15 +79,20 @@ export const TrackInfo = observer(
 
                 <div>
                     <div className="text-lg text-white font-medium">
-                        {track ? <button onClick={() => {
-                            if (!isActive) {
-                                musicPlayerStore.setTrack(track);
-                                musicPlayerStore.play();
+                        {track ? (
+                            <button onClick={() => {
+                                if (!isActive) {
+                                    musicPlayerStore.setTrack(track);
                             }
+                            musicPlayerStore.play();
                         }}
-                                         className="hover:underline"
+                            className="hover:underline"
                         >
-                            {title}</button> : title}
+                            {title}
+                        </button>
+                        ) : (
+                            title
+                        )}
 
                     </div>
                     <div>{subTitle}</div>
