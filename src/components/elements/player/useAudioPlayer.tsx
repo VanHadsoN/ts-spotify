@@ -7,7 +7,7 @@ export const useAudioPlayer = () => {
     useEffect(() => {
         if (!audioRef.current) return;
 
-        if (!musicPlayerStore.isPlaying) {
+        if (musicPlayerStore.isPlaying) {
             audioRef.current.play();
         } else {
             audioRef.current.pause();
