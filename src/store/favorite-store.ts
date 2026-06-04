@@ -13,6 +13,7 @@ class FavoriteStore {
         } else {
             this.favoritesName.push(trackName);
         }
+        localStorage.setItem('favorites', JSON.stringify(this.favoritesName));
     }
 }
 
