@@ -3,11 +3,17 @@ import {SearchField} from "@/components/elements/search-field/SearchField.tsx";
 import {Play} from "lucide-react";
 import {TRACKS} from "@/data/tracks.data.ts";
 import {Track} from "@/components/elements/track-item/Track.tsx";
+import {useQueryState} from "nuqs";
 
 function App() {
+    const [searchTerm, setSearchTerm] = useQueryState('q');
+
   return (
       <div>
-          <SearchField />
+          <SearchField
+              value={searchTerm || ''}
+              onChange={e => setSearchTerm(e.target.value)}
+          />
           <div className="relative">
               <img src="/banner.png" alt="" className="rounded-xl" />
 
