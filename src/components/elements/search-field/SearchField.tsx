@@ -8,7 +8,7 @@ interface Props {
 
 export function SearchField({value, onChange}: Props) {
     return <div>
-        <label className="flex items-center gap-3 group">
+        <label className="flex items-center gap-3 mb-[0.5rem] group">
             <Search className="opacity-40 group-focus-within:opacity-100 duration-300" />
             <input
                 type="search"
