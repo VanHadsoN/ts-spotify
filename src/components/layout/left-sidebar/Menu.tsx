@@ -8,6 +8,9 @@ interface Props {
 export function Menu({items, title}: Props) {
     return <div>
         {title && <div className="opacity-60 text-xxs uppercase font-medium mb-5">{title}</div>}
+
+        {items.length === 0 && <div>No items found</div>}
+
         <ul>
             {items.map((item) => (
                 <li key={item.name}>
