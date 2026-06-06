@@ -4,9 +4,16 @@ import {Play} from "lucide-react";
 import {TRACKS} from "@/data/tracks.data.ts";
 import {Track} from "@/components/elements/track-item/Track.tsx";
 import {useQueryState} from "nuqs";
+import {useMemo} from "react";
 
 function App() {
     const [searchTerm, setSearchTerm] = useQueryState('q');
+
+    const filteredTracks = useMemo(() => {
+        if (!searchTerm) return TRACKS
+
+        return TRACKS.filter(track => track.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()));
+    }, [searchTerm]);
 
   return (
       <div>
@@ -32,7 +39,7 @@ function App() {
           </div>
 
           <div>
-              {TRACKS.map(track => (
+              {filteredTracks.map(track => (
                   <Track key={track.name} track={track} />
               ))}
           </div>
