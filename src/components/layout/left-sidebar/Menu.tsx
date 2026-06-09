@@ -1,11 +1,13 @@
 import type { IMenuItem } from "@/types/menu.types.ts";
+import type {ReactNode} from "react";
 
 interface Props {
     items: IMenuItem[];
     title?: string;
+    children?: ReactNode;
 }
 
-export function Menu({items, title}: Props) {
+export function Menu({ items, title, children }: Props) {
     return <div>
         {title && <div className="opacity-60 text-xxs uppercase font-medium mb-5">{title}</div>}
 
@@ -23,6 +25,8 @@ export function Menu({items, title}: Props) {
                 </li>
             ))}
         </ul>
+
+        {children}
 
     </div>
 }
