@@ -3,9 +3,14 @@ import {playlistStore} from "@/store/playlist.store.ts";
 import {PagesConfig} from "@/config/pages.config.ts";
 import {Plus} from "lucide-react";
 import {CustomMenu} from "@/components/ui/custom-menu/CustomMenu.tsx";
+import {useState} from "react";
+import {musicPlayerStore} from "@/store/store.ts";
 
 
 export function SidebarPlaylist() {
+    const [value, setValue] = useState("");
+    const [isShow, setIsShow] = useState(false);
+
     return (
         <Menu
             items={
@@ -22,9 +27,22 @@ export function SidebarPlaylist() {
                     <Plus /> <span>New Playlist</span>
                 </button>
 
-                <CustomMenu>
-                    <input type="text" placeholder="Playlist name"/>
-                </CustomMenu>
+                {isShow && (
+                    <CustomMenu>
+                        <input
+                            type="text"
+                            placeholder="Playlist name"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            onKeyDown={e => {
+                                if (e.key === "Enter" && value.trim()) {
+                                    playlistStore.createPlaylist(value.trim())
+                                    setValue("");
+                                }
+                            }}
+                        />
+                    </CustomMenu>
+                )}
             </div>
 
         </Menu>
