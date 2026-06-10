@@ -23,7 +23,9 @@ export function SidebarPlaylist() {
         >
             <div className="relative">
                 <button className="flex items-center gap-1.5 mt-5 bg-zinc-700/30 py-2 px-3.5 rounded-md
-            duration-300 transition-colors hover:bg-zinc-700/50">
+                duration-300 transition-colors hover:bg-zinc-700/50"
+                        onClick={() => setIsShow(prev => !prev)}
+                >
                     <Plus /> <span>New Playlist</span>
                 </button>
 
@@ -40,6 +42,8 @@ export function SidebarPlaylist() {
                                     setValue("");
                                 }
                             }}
+                            className="border border-transparent transition-colors duration-300
+                            focus:border-primary rounded-md px-3 py-2"
                         />
                     </CustomMenu>
                 )}
