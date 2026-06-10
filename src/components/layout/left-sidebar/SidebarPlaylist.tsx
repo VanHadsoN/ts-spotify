@@ -43,8 +43,7 @@ export function SidebarPlaylist() {
                                     setValue("");
                                 }
                             }}
-                            className="border border-transparent transition-colors duration-300
-                            focus:border-primary rounded-md px-3 py-2"
+                            className="rounded-md px-3 py-2 w-full"
                         />
                     </CustomMenu>
                 )}
