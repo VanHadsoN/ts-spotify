@@ -32,6 +32,7 @@ export function SidebarPlaylist() {
                 {isShow && (
                     <CustomMenu>
                         <input
+                            autoFocus
                             type="text"
                             placeholder="Playlist name"
                             value={value}

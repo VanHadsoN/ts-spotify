@@ -79,7 +79,6 @@ input[type="range"]::-ms-thumb {
 
 input {
   background-color: transparent;
-  border: none;
   outline: none;
 }
 
