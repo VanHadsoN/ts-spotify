@@ -20,19 +20,14 @@ class PlaylistStore {
         this.saveToLocalStorage();
     }
 
-    addToPlaylist(playlistName: string, trackName: string) {
-        const playlist = this.playlists.find(playlist => playlist.name === playlistName);
-        if (!playlist || playlist.tracks.includes(trackName)) return;
-        playlist.tracks.push(trackName);
-
-        this.saveToLocalStorage();
-    }
-
-    removeFromPlaylist(playlistName: string, trackName: string) {
+    toggleTrackImPlaylist(playlistName: string, trackName: string) {
         const playlist = this.playlists.find(playlist => playlist.name === playlistName);
         if (!playlist) return;
-        playlist.tracks = playlist.tracks.filter(name => name !== trackName);
-
+        if(playlist.tracks.includes(trackName)) {
+            playlist.tracks = playlist.tracks.filter(name => name !== trackName);
+        } else {
+            playlist.tracks.push(trackName);
+        }
         this.saveToLocalStorage();
     }
 
