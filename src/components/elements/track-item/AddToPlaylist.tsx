@@ -13,7 +13,7 @@ interface Props {
 }
 
 
-export const AddToPaylist = observer(function AddToPaylist({track}: Props) {
+export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
     const [value, setValue] = useState("");
     const [isShow, setIsShow] = useState(false);
     return (
