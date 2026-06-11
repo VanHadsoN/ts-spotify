@@ -35,6 +35,12 @@ class PlaylistStore {
 
         this.saveToLocalStorage();
     }
+
+    isTrackInPlaylist(playlistName: string, trackName: string) {
+        const playlist = this.playlists.find(playlist => playlist.name === playlistName);
+        if (!playlist) return false;
+        return playlist.tracks.includes(trackName);
+    }
 }
 
 export const playlistStore = new PlaylistStore();
