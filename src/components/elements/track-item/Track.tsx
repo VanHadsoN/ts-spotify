@@ -1,9 +1,10 @@
 import type { ITrack } from "@/types/track.types";
-import {Ellipsis, Heart} from "lucide-react";
+import { Heart } from "lucide-react";
 import {TrackInfo} from "@/components/ui/track-info/TrackInfo";
 import {transformDuration} from "@/utils/transform-duration.ts";
 import {favoriteStore} from "@/store/favorite.store.ts";
 import { observer } from "mobx-react-observer";
+import {AddToPlaylist} from "@/components/elements/track-item/AddToPlaylist.tsx";
 
 interface Props {
     track: ITrack;
@@ -28,7 +29,7 @@ export const Track = observer(function Track({track}: Props) {
                     />
                 </button>
                 <button>
-                    <Ellipsis className="opacity-65 hover:opacity-100" />
+                    <AddToPlaylist track={track} />
                 </button>
             </div>
         </div>
