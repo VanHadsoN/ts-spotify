@@ -21,7 +21,7 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
             </button>
 
             {isShow && (
-                <CustomMenu>
+                <CustomMenu side="right">
                     {playlistStore.playlists.map(playlist => {
                         const isAdded = playlistStore.isTrackInPlaylist(
                             playlist.name,
