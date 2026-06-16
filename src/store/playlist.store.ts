@@ -20,7 +20,7 @@ class PlaylistStore {
         this.saveToLocalStorage();
     }
 
-    toggleTrackImPlaylist(playlistName: string, trackName: string) {
+    toggleTrackInPlaylist(playlistName: string, trackName: string) {
         const playlist = this.playlists.find(playlist => playlist.name === playlistName);
         if (!playlist) return;
         if(playlist.tracks.includes(trackName)) {
