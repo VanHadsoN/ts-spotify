@@ -22,31 +22,30 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
 
             {isShow && (
                 <CustomMenu side="right">
-                    {playlistStore.playlists.map(playlist => {
-                        const isAdded = playlistStore.isTrackInPlaylist(
-                            playlist.name,
-                            track.name
-                        )
-                        return (
-                            <button
-                                key={playlist.name}
-                                className="w-full text-left px-4 py-2 hover:bg-white/10"
-                                onClick={() => {
-                                    playlistStore.toggleTrackInPlaylist(
-                                        playlist.name,
-                                        track.name
-                                    )
-                                }}
-                            >
-                                <span
-                                    className={cn('transition-opacity duration-300', isAdded ?
-                                        'opacity-100' : 'opacity-60')}
+                    <div>
+                        {playlistStore.playlists.map(playlist => {
+                            const isAdded = playlistStore.isTrackInPlaylist(
+                                playlist.name,
+                                track.name
+                            )
+                            return (
+                                <button
+                                    key={playlist.name}
+                                    className={cn("w-full text-left transition-opacity duration-300",
+                                        isAdded ? "opacity-100" : "opacity-60"
+                                    )}
+                                    onClick={() => {
+                                        playlistStore.toggleTrackInPlaylist(
+                                            playlist.name,
+                                            track.name
+                                        )
+                                    }}
                                 >
-                                    {playlist.name}
-                                </span>
-                            </button>
-                        )
-                    })}
+                                    <span>{playlist.name}</span>
+                                </button>
+                            )
+                        })}
+                    </div>
                 </CustomMenu>
             )}
         </div>
