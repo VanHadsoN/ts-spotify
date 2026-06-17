@@ -2,10 +2,38 @@
 
 import { Play } from 'lucide-react'
 import styles from './Lyrics.module.css'
+import {LYRICS} from "@/data/lyrics.data.ts";
+import {musicPlayerStore} from "@/store/store.ts";
 
 export function Lyrics() {
+    const lyric = LYRICS.find(
+        lyric => lyric.trackName === musicPlayerStore.currentTrack?.name
+    );
+
     return <div>
         <div className={styles.lyrics}>
+
+            {lyric?.lines?.map((line, index) => (
+                <p
+                key={index}
+                className={musicPlayerStore.currentTime >= line.time
+                    ? styles.active
+                    : undefined
+                }
+                >
+                    {line.section && <div>[ {line.section} ]</div>}
+                    {musicPlayerStore.currentTime >= line.time && (
+                        <Play
+                            fill="var(--color-primary)"
+                            className={styles.icon}
+                            size={10}
+                        />
+                    )}
+                    {line.text}
+                </p>
+            ))
+            }
+
             <div>[ Verse 1 ]</div>
             <p>Well, on a train, I met a dame</p>
             <p>She rather handsome, we kinda looked the same</p>
