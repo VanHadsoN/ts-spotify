@@ -12,7 +12,7 @@ interface Props {
 
 
 export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
-    // const [value, setValue] = useState("");
+
     const [isShow, setIsShow] = useState(false);
     return (
         <div className="relative">
@@ -22,7 +22,7 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
 
             {isShow && (
                 <CustomMenu side="right">
-                    <div>
+                    <div className="p-1.5 space-y-1.5">
                         {playlistStore.playlists.map(playlist => {
                             const isAdded = playlistStore.isTrackInPlaylist(
                                 playlist.name,
@@ -31,8 +31,9 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
                             return (
                                 <button
                                     key={playlist.name}
-                                    className={cn("w-full text-left transition-opacity duration-300",
-                                        isAdded ? "opacity-100" : "opacity-60"
+                                    className={cn("w-full text-left transition-opacity duration-300 " +
+                                        "hover:opacity-100 text-sm",
+                                        isAdded ? "opacity-100 font-semibold" : "opacity-60"
                                     )}
                                     onClick={() => {
                                         playlistStore.toggleTrackInPlaylist(
