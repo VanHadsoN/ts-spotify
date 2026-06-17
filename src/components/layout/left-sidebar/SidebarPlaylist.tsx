@@ -4,8 +4,6 @@ import {PagesConfig} from "@/config/pages.config.ts";
 import {Plus} from "lucide-react";
 import {CustomMenu} from "@/components/ui/custom-menu/CustomMenu.tsx";
 import {useState} from "react";
-import {musicPlayerStore} from "@/store/store.ts";
-
 
 export function SidebarPlaylist() {
     const [value, setValue] = useState("");
