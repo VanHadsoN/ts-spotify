@@ -14,8 +14,11 @@ function LyricsInner() {
         return <div className={styles.lyrics}>Lyrics not found</div>
     }
 
-    const activeLineIndex = lyric.lines.findLastIndex(
-        line => musicPlayerStore.currentTime >= line.time
+    const activeLineIndex = Math.max(
+        0,
+        lyric.lines.findLastIndex(
+            line => musicPlayerStore.currentTime >= line.time
+        )
     );
 
     return <div>
