@@ -1,6 +1,12 @@
 .lyrics {
     text-align: center;
 
+    .lineText {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
     > div {
         font-weight: 500;
         margin: 1.25rem 0;
@@ -23,7 +29,6 @@
         }
 
         .icon {
-            position: absolute;
             left: -1rem;
             top: 0.7rem;
             color: var(--color-primary);
