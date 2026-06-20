@@ -1,4 +1,3 @@
-import './App.css'
 import {SearchField} from "@/components/elements/search-field/SearchField.tsx";
 import {Play} from "lucide-react";
 import {TRACKS} from "@/data/tracks.data.ts";
