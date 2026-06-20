@@ -8,6 +8,7 @@ class MusicPlayerStore {
     volume: number = 85;
     currentTime: number = 0;
     progress: number = 0;
+    seekRequestTime: number | null = null;
 
     constructor() {
         makeAutoObservable(this);
@@ -60,6 +61,11 @@ class MusicPlayerStore {
 
         this.currentTime = 0;
         this.progress = 0;
+    }
+
+    requestSeek(time: number) {
+        this.seekRequestTime = time;
+        this.seek(time);
     }
 }
 

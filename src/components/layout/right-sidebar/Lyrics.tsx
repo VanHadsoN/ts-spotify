@@ -30,7 +30,7 @@ function LyricsInner() {
                     {line.section && <div>[ {line.section} ]</div>}
 
                     <button className={index === activeLineIndex ? styles.active : undefined}
-                            onClick={() => {musicPlayerStore.seek(line.time)}}
+                            onClick={() => {musicPlayerStore.requestSeek(line.time)}}
                     >
                         <p className={styles.lineText}>
                             {index === activeLineIndex && (

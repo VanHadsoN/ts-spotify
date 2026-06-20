@@ -21,6 +21,13 @@ export function AudioPlayerInner({}: Props) {
         if (el) el.load();
     }, [track.file]);
 
+    useEffect(() => {
+        if (musicPlayerStore.seekRequestTime === null) return;
+        if(!audioRef.current) return;
+
+        audioRef.current.currentTime = musicPlayerStore.seekRequestTime;
+    }, [musicPlayerStore.seekRequestTime]);
+
     return <div className="w-full py-5 px-10 bg-player-bg
             border-t border-white/10
             grid grid-cols-[1fr_5.8fr] fixed bottom-0 left-0">
