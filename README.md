@@ -1,73 +1,82 @@
-# React + TypeScript + Vite
+# TS Spotify
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Учебный Spotify-like плеер на React, TypeScript и Vite. Приложение показывает список треков, позволяет искать треки, запускать аудио, переключать композиции, управлять прогрессом и громкостью, отмечать избранное, создавать плейлисты и добавлять в них треки.
 
-Currently, two official plugins are available:
+## Стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS 4
+- MobX
+- nuqs
+- lucide-react
+- react-circular-progressbar
 
-## React Compiler
+## Возможности
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Поиск треков с синхронизацией query-параметра `q` в URL.
+- Нижний аудиоплеер с play/pause, next/prev, прогрессом и громкостью.
+- Отображение активного трека и кругового прогресса в списке.
+- Синхронизированные lyrics с возможностью перейти к нужному времени.
+- Избранные треки с сохранением в `localStorage`.
+- Пользовательские плейлисты с сохранением в `localStorage`.
+- Добавление и удаление треков из плейлистов.
 
-## Expanding the ESLint configuration
+## Структура проекта
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+  components/
+    elements/       # Функциональные элементы: плеер, поиск, трек
+    layout/         # Основная разметка: сайдбары, layout
+    ui/             # Переиспользуемые UI-компоненты
+  config/           # Конфигурация страниц
+  data/             # Статические данные треков, артистов, меню и lyrics
+  store/            # MobX-store приложения
+  types/            # TypeScript-типы
+  utils/            # Вспомогательные функции
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Запуск
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Установите зависимости:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+Запустите dev-сервер:
+
+```bash
+npm run dev
+```
+
+Проверка линтером:
+
+```bash
+npm run lint
+```
+
+Production-сборка:
+
+```bash
+npm run build
+```
+
+Предпросмотр production-сборки:
+
+```bash
+npm run preview
+```
+
+## Данные и ассеты
+
+Треки описаны в `src/data/tracks.data.ts`.
+
+
+## Состояние приложения
+
+- `src/store/store.ts` хранит состояние аудиоплеера: текущий трек, play/pause, время, прогресс, громкость и запросы seek.
+- `src/store/favorite.store.ts` хранит избранные треки в `localStorage`.
+- `src/store/playlist.store.ts` хранит пользовательские плейлисты в `localStorage`.
