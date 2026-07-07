@@ -6,20 +6,18 @@ import { useEffect } from "react";
 import {ProgressBar} from "@/components/ui/progress-bar/ProgressBar.tsx";
 import {useAudioPlayer} from "@/components/elements/player/useAudioPlayer.tsx";
 
-interface Props {}
-
-export function AudioPlayerInner({}: Props) {
+export function AudioPlayerInner() {
     const { audioRef, togglePlayPause, onSeek, changeTrack, setVolume } = useAudioPlayer();
     // const isDraggingRef = useRef(false);
 
     const track = musicPlayerStore.currentTrack;
-    if (!track) return null;
 
     useEffect(() => {
+        if (!track) return;
         musicPlayerStore.resetPlayback?.();
         const el = audioRef.current;
         if (el) el.load();
-    }, [track.file]);
+    }, [track?.file]);
 
     useEffect(() => {
         if (musicPlayerStore.seekRequestTime === null) return;
@@ -27,6 +25,8 @@ export function AudioPlayerInner({}: Props) {
 
         audioRef.current.currentTime = musicPlayerStore.seekRequestTime;
     }, [musicPlayerStore.seekRequestTime]);
+
+    if (!track) return null;
 
     return <div className="w-full py-5 px-10 bg-player-bg
             border-t border-white/10
