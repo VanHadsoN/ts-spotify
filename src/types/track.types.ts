@@ -6,4 +6,5 @@ export interface ITrack {
     artist: IArtist;
     duration: number; // in seconds
     cover: string;
+    id: string;
 }
