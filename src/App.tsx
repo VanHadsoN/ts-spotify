@@ -39,7 +39,7 @@ function App() {
 
           <div>
               {filteredTracks.map(track => (
-                  <Track key={track.name} track={track} />
+                  <Track key={track.id} track={track} />
               ))}
           </div>
 
