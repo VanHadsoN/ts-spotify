@@ -5,13 +5,13 @@ export interface ILyricsLine {
 }
 
 export interface ILyrics {
-	trackName: string
+	trackId: string
 	lines: ILyricsLine[]
 }
 
 export const LYRICS: ILyrics[] = [
 	{
-		trackName: 'Train Kept A Rollin’',
+		trackId: 'trk_1bm3sog',
 		lines: [
 			{ time: 28, section: 'Verse 1', text: 'Well, on a train, I met a dame' },
 			{ time: 35, text: 'She rather handsome, we kinda looked the same' },
@@ -49,7 +49,7 @@ export const LYRICS: ILyrics[] = [
 		],
 	},
 	{
-		trackName: 'Green River',
+		trackId: 'trk_1kzggf',
 		lines: [
 			{ time: 0, section: 'Verse 1', text: 'Well, take me back down where cool water flow, yeah' },
 			{ time: 8, text: 'Let me remember things I love' },
@@ -74,7 +74,7 @@ export const LYRICS: ILyrics[] = [
 		],
 	},
 	{
-		trackName: 'Zitti e buoni',
+		trackId: 'trk_1bgzmgy',
 		lines: [
 			{ time: 0, section: 'Intro', text: 'La la la la le la la la le' },
 			{ time: 8, section: 'Chorus', text: 'Zitti e buoni, la sera è sempre giovane da qui' },
@@ -103,7 +103,7 @@ export const LYRICS: ILyrics[] = [
 		],
 	},
 	{
-		trackName: 'Little By Little',
+		trackId: 'trk_13c760x',
 		lines: [
 			{ time: 0, section: 'Verse 1', text: "Little by little we're gonna chip away at it, little by little" },
 			{ time: 12, text: 'When happiness comes they come with much hard gone' },
@@ -132,7 +132,7 @@ export const LYRICS: ILyrics[] = [
 		],
 	},
 	{
-		trackName: 'Last of the Mohikans Theme',
+		trackId: 'trk_1act6bb',
 		lines: [
 			{ time: 0, section: 'Instrumental', text: '♪ The Last of the Mohicans — Main Theme ♪' },
 			{ time: 30, text: '♪ flute & strings ♪' },

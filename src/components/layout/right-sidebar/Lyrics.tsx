@@ -7,7 +7,7 @@ import {observer} from "mobx-react-lite";
 
 function LyricsInner() {
     const lyric = LYRICS.find(
-        lyric => lyric.trackName === musicPlayerStore.currentTrack?.name
+        lyric => lyric.trackId === musicPlayerStore.currentTrack?.id
     );
 
     if (!lyric) {
