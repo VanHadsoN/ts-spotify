@@ -23,9 +23,9 @@ export const Track = observer(function Track({track}: Props) {
                 />
             </div>
             <div className="flex shrink-0 items-center gap-4">
-                <button onClick={() => {favoriteStore.toggleFavorite(track.name)}} >
+                <button onClick={() => {favoriteStore.toggleFavorite(track.id)}} >
                     <Heart className="text-primary opacity-85 duration-300 hover:opacity-100"
-                           fill={favoriteStore.favoritesName.includes(track.name) ? 'var(--color-primary)' : 'none'}
+                           fill={favoriteStore.isFavorite(track.id) ? 'var(--color-primary)' : 'none'}
                     />
                 </button>
                 <button>
