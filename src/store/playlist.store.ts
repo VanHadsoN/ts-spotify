@@ -1,7 +1,12 @@
 import { makeAutoObservable } from "mobx";
 
+type Playlist = {
+    name: string;
+    trackIds: string[];
+};
+
 class PlaylistStore {
-    playlists: { name: string; tracks: string[] }[] = JSON.parse(
+    playlists: Playlist[] = JSON.parse(
         localStorage.getItem('playlists') || '[]'
     );
 
@@ -15,26 +20,26 @@ class PlaylistStore {
 
     createPlaylist(name: string) {
         if (this.playlists.find(playlist => playlist.name === name)) return;
-        this.playlists.push({ name, tracks: [] });
+        this.playlists.push({ name, trackIds: [] });
 
         this.saveToLocalStorage();
     }
 
-    toggleTrackInPlaylist(playlistName: string, trackName: string) {
+    toggleTrackInPlaylist(playlistName: string, trackId: string) {
         const playlist = this.playlists.find(playlist => playlist.name === playlistName);
         if (!playlist) return;
-        if(playlist.tracks.includes(trackName)) {
-            playlist.tracks = playlist.tracks.filter(name => name !== trackName);
+
+        if(playlist.trackIds.includes(trackId)) {
+            playlist.trackIds = playlist.trackIds.filter(id => id !== trackId);
         } else {
-            playlist.tracks.push(trackName);
+            playlist.trackIds.push(trackId);
         }
         this.saveToLocalStorage();
     }
 
-    isTrackInPlaylist(playlistName: string, trackName: string) {
+    isTrackInPlaylist(playlistName: string, trackId: string) {
         const playlist = this.playlists.find(playlist => playlist.name === playlistName);
-        if (!playlist) return false;
-        return playlist.tracks.includes(trackName);
+        return playlist?.trackIds.includes(trackId) ?? false;
     }
 }
 

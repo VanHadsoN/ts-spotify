@@ -24,10 +24,7 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
                 <CustomMenu side="right">
                     <div className="p-1.5 space-y-1.5">
                         {playlistStore.playlists.map(playlist => {
-                            const isAdded = playlistStore.isTrackInPlaylist(
-                                playlist.name,
-                                track.name
-                            )
+                            const isAdded = playlistStore.isTrackInPlaylist(playlist.name, track.id);
                             return (
                                 <button
                                     key={playlist.name}
@@ -36,10 +33,7 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
                                         isAdded ? "opacity-100 font-semibold" : "opacity-60"
                                     )}
                                     onClick={() => {
-                                        playlistStore.toggleTrackInPlaylist(
-                                            playlist.name,
-                                            track.name
-                                        )
+                                        playlistStore.toggleTrackInPlaylist(playlist.name, track.id)
                                     }}
                                 >
                                     <span>{playlist.name}</span>
