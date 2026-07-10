@@ -44,7 +44,7 @@ export function AudioPlayerInner() {
                 const currentTime = Math.floor(e.currentTarget.currentTime);
                 musicPlayerStore.seek(currentTime);
             }}
-            onEnded={() => (musicPlayerStore.isPlaying = false)}
+            onEnded={() => (musicPlayerStore.finishTrack())}
         />
 
         <div className="grid grid-cols-[1fr_8fr_2fr] gap-8 items-center">

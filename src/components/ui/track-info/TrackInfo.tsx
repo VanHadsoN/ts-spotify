@@ -18,18 +18,28 @@ export const TrackInfo = observer(
 
         const isActive = musicPlayerStore.currentTrack?.id === track?.id;
 
+        const handleCoverClick = () => {
+            if(!track) return;
+
+            if(!isActive) {
+                musicPlayerStore.selectTrack(track);
+                musicPlayerStore.play();
+                return;
+            }
+
+            if(musicPlayerStore.isPlaying) {
+                musicPlayerStore.pause();
+            } else {
+                musicPlayerStore.play();
+            }
+        };
+
         return (
             <div className="flex items-center gap-3">
 
                 {track ? (
                     <button
-                        onClick={() => {
-
-                            if (!isActive) {
-                                musicPlayerStore.setTrack(track)
-                            }
-                            musicPlayerStore.togglePlayPause()
-                        }}
+                        onClick={handleCoverClick}
                         className="block relative group"
                     >
                         {isActive && (
@@ -81,11 +91,12 @@ export const TrackInfo = observer(
                     <div className="text-lg text-white font-medium">
                         {track ? (
                             <button onClick={() => {
+                                if (!track) return;
                                 if (!isActive) {
-                                    musicPlayerStore.setTrack(track);
-                            }
-                            musicPlayerStore.play();
-                        }}
+                                    musicPlayerStore.selectTrack(track);
+                                }
+                                musicPlayerStore.play();
+                            }}
                             className="hover:underline"
                         >
                             {title}

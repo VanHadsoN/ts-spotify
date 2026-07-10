@@ -18,9 +18,14 @@ class MusicPlayerStore {
         this.currentTrack = track;
     }
 
-    togglePlayPause() {
-        this.isPlaying = !this.isPlaying;
+    selectTrack(track: ITrack) {
+        this.setTrack(track);
+        this.resetPlayback();
     }
+
+    // togglePlayPause() {
+    //     this.isPlaying = !this.isPlaying;
+    // }
 
     play() {
         this.isPlaying = true;
@@ -28,6 +33,11 @@ class MusicPlayerStore {
 
     pause() {
         this.isPlaying = false;
+    }
+
+    finishTrack() {
+        this.pause();
+        this.seekRequestTime = null;
     }
 
     seek(time: number) {
