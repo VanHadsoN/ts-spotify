@@ -16,7 +16,7 @@ interface Props {
 export const TrackInfo = observer(
     function TrackInfo({ title, subTitle, image, track }: Props) {
 
-        const isActive = musicPlayerStore.currentTrack?.name === track?.name;
+        const isActive = musicPlayerStore.currentTrack?.id === track?.id;
 
         return (
             <div className="flex items-center gap-3">
