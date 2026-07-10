@@ -11,7 +11,13 @@ function App() {
     const filteredTracks = useMemo(() => {
         if (!searchTerm) return TRACKS
 
-        return TRACKS.filter(track => track.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()));
+        return TRACKS.filter(track => {
+            const query = searchTerm.toLocaleLowerCase();
+
+            return (
+                track.name.toLocaleLowerCase().includes(query) || track.artist.name.toLocaleLowerCase().includes(query)
+            );
+        });
     }, [searchTerm]);
 
   return (
