@@ -50,8 +50,10 @@ class MusicPlayerStore {
         if (!this.currentTrack) return;
 
         const currentIndex = TRACKS.findIndex(
-            track => track.name === this.currentTrack?.name
+            track => track.id === this.currentTrack?.id
         )
+
+        if(currentIndex === -1) return;
 
         const nextIndex =
             type === "next"
