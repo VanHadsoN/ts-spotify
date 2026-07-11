@@ -47,10 +47,6 @@ export const useAudioPlayer = () => {
 
     const changeTrack = (type: "prev" | "next") => {
         musicPlayerStore.changeTrack(type);
-
-        if (audioRef.current && musicPlayerStore.isPlaying) {
-            audioRef.current.play();
-        }
     }
 
     const setVolume = (volume: number) => {
