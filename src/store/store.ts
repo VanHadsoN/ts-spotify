@@ -69,10 +69,8 @@ class MusicPlayerStore {
             type === "next"
                 ? (currentIndex + 1) % TRACKS.length
                 : (currentIndex - 1 + TRACKS.length) % TRACKS.length
-        this.setTrack(TRACKS[nextIndex]);
 
-        this.currentTime = 0;
-        this.progress = 0;
+    this.selectTrack(TRACKS[nextIndex]);
     }
 
     requestSeek(time: number) {
