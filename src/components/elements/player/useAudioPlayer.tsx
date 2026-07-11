@@ -5,27 +5,38 @@ export const useAudioPlayer = () => {
     const audioRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
-        if (!audioRef.current) return;
+        const audio = audioRef.current;
+        if(!audio) return;
 
-        if (musicPlayerStore.isPlaying) {
-            audioRef.current.play();
+        if(musicPlayerStore.isPlaying) {
+            void audio.play().catch((error) => {
+                console.error("Audio play failed:", error);
+                musicPlayerStore.pause();
+            });
         } else {
-            audioRef.current.pause();
+            audio.pause();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [musicPlayerStore.isPlaying]);
 
-    const togglePlayPause = () => {
-        if (!audioRef.current) return;
+    const togglePlayPause = async () => {
+        const audio = audioRef.current;
+        if(!audio) return;
 
-        musicPlayerStore.togglePlayPause();
-
-        if (audioRef.current.paused) {
-            audioRef.current.play();
-        } else {
-            audioRef.current.pause();
+        if(musicPlayerStore.isPlaying) {
+            musicPlayerStore.pause();
+            audio.pause();
+            return;
         }
-    }
+
+        try {
+            await audio.play();
+            musicPlayerStore.play();
+        } catch (error) {
+            console.error("Audio play failed:", error);
+            musicPlayerStore.pause();
+        }
+    };
 
     const onSeek = (time: number) => {
         if (!audioRef.current) return;
