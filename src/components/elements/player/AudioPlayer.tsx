@@ -14,10 +14,22 @@ export function AudioPlayerInner() {
 
     useEffect(() => {
         if (!track) return;
+
         musicPlayerStore.resetPlayback?.();
+
         const el = audioRef.current;
-        if (el) el.load();
-    }, [track?.file]);
+        if(!el) return;
+
+        el.load();
+
+        // если до переключения уже играло - запускаем новый трек сразу
+        if(musicPlayerStore.isPlaying) {
+            void el.play().catch((error) => {
+                console.error("Audio play failed after track change:",error);
+                musicPlayerStore.pause();
+            });
+        }
+    }, [track?.file, musicPlayerStore.isPlaying]);
 
     useEffect(() => {
         if (musicPlayerStore.seekRequestTime === null) return;
