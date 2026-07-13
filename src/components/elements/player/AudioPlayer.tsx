@@ -11,9 +11,12 @@ export function AudioPlayerInner() {
     // const isDraggingRef = useRef(false);
 
     const track = musicPlayerStore.currentTrack;
+    const trackFile = track?.file;
+    const isPlaying = musicPlayerStore.isPlaying;
+    const seekRequestTime = musicPlayerStore.seekRequestTime;
 
     useEffect(() => {
-        if (!track) return;
+        if (!trackFile) return;
 
         musicPlayerStore.resetPlayback?.();
 
@@ -23,20 +26,20 @@ export function AudioPlayerInner() {
         el.load();
 
         // если до переключения уже играло - запускаем новый трек сразу
-        if(musicPlayerStore.isPlaying) {
+        if(isPlaying) {
             void el.play().catch((error) => {
                 console.error("Audio play failed after track change:",error);
                 musicPlayerStore.pause();
             });
         }
-    }, [track?.file, musicPlayerStore.isPlaying]);
+    }, [trackFile, isPlaying, audioRef]);
 
     useEffect(() => {
-        if (musicPlayerStore.seekRequestTime === null) return;
+        if (seekRequestTime === null) return;
         if(!audioRef.current) return;
 
-        audioRef.current.currentTime = musicPlayerStore.seekRequestTime;
-    }, [musicPlayerStore.seekRequestTime]);
+        audioRef.current.currentTime = seekRequestTime;
+    }, [seekRequestTime, audioRef]);
 
     if (!track) return null;
 
@@ -51,7 +54,7 @@ export function AudioPlayerInner() {
 
         <audio
             ref={audioRef}
-            src={track.file}
+            src={trackFile}
             onTimeUpdate={(e) => {
                 const currentTime = Math.floor(e.currentTarget.currentTime);
                 musicPlayerStore.seek(currentTime);
