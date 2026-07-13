@@ -1,7 +1,15 @@
-import {makeAutoObservable} from "mobx";
+import { makeAutoObservable } from "mobx";
+import { readStorageJSON, STORAGE_KEYS, writeStorageJSON } from "@/utils/storage.ts";
+
+const isStringArray = (value: unknown): value is string[] =>
+    Array.isArray(value) && value.every((item) => typeof item === "string");
 
 class FavoriteStore {
-    favoritesTrackIds: string[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+    favoritesTrackIds: string[] = readStorageJSON<string[]>(
+        STORAGE_KEYS.favorites,
+        [],
+        isStringArray
+    );
 
     constructor() {
         makeAutoObservable(this);
@@ -13,7 +21,8 @@ class FavoriteStore {
         } else {
             this.favoritesTrackIds.push(trackId);
         }
-        localStorage.setItem('favorites', JSON.stringify(this.favoritesTrackIds));
+
+        writeStorageJSON(STORAGE_KEYS.favorites, this.favoritesTrackIds);
     }
 
     isFavorite(trackId: string) {
