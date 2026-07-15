@@ -7,6 +7,8 @@ export class PagesConfig {
     static RECENTLY_PLAYED = '/recently-played';
     static LIKED_SONGS = '/liked-songs';
 
+    static PLAYLIST_ROUTE = '/playlist/:id';
+
     static PLAYLIST(id: string) {
         return `/playlist/${id}`;
     }
