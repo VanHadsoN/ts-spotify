@@ -43,31 +43,31 @@ src/
 Установите зависимости:
 
 ```bash
-npm install
+pnpm install
 ```
 
 Запустите dev-сервер:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 Проверка линтером:
 
 ```bash
-npm run lint
+pnpm lint
 ```
 
 Production-сборка:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 Предпросмотр production-сборки:
 
 ```bash
-npm run preview
+pnpm preview
 ```
 
 ## Данные и ассеты
