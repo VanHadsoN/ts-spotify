@@ -23,9 +23,9 @@ class MusicPlayerStore {
         this.resetPlayback();
     }
 
-    // togglePlayPause() {
-    //     this.isPlaying = !this.isPlaying;
-    // }
+    togglePlayPause() {
+        this.isPlaying = !this.isPlaying;
+    }
 
     play() {
         this.isPlaying = true;
@@ -76,6 +76,10 @@ class MusicPlayerStore {
     requestSeek(time: number) {
         this.seekRequestTime = time;
         this.seek(time);
+    }
+
+    clearSeekRequest() {
+        this.seekRequestTime = null;
     }
 }
 
