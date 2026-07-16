@@ -3,7 +3,7 @@ import { Heart } from "lucide-react";
 import {TrackInfo} from "@/components/ui/track-info/TrackInfo";
 import {transformDuration} from "@/utils/transform-duration.ts";
 import {favoriteStore} from "@/store/favorite.store.ts";
-import { observer } from "mobx-react-observer";
+import { observer } from "mobx-react-lite";
 import {AddToPlaylist} from "@/components/elements/track-item/AddToPlaylist.tsx";
 
 interface Props {

@@ -1,6 +1,6 @@
 import type { ITrack } from "@/types/track.types";
 import { Ellipsis } from "lucide-react";
-import { observer } from "mobx-react-observer";
+import { observer } from "mobx-react-lite";
 import {useState} from "react";
 import {CustomMenu} from "@/components/ui/custom-menu/CustomMenu.tsx";
 import {playlistStore} from "@/store/playlist.store.ts";

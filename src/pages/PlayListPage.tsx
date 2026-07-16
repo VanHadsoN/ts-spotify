@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { observer } from "mobx-react-observer";
+import { observer } from "mobx-react-lite";
 
 import { Track } from "@/components/elements/track-item/Track.tsx";
 import { TRACKS } from "@/data/tracks.data.ts";
