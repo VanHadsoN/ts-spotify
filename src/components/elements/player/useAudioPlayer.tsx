@@ -1,5 +1,5 @@
-import {useEffect, useRef} from "react";
-import {musicPlayerStore} from "@/store/store.ts";
+import { useCallback,useEffect, useRef } from "react";
+import { musicPlayerStore } from "@/store/store.ts";
 
 export const useAudioPlayer = () => {
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -19,42 +19,63 @@ export const useAudioPlayer = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [musicPlayerStore.isPlaying]);
 
-    const togglePlayPause = async () => {
+    useEffect(() => {
+        const audio = audioRef.current;
+        const trackFile = musicPlayerStore.currentTrack?.file;
+        if(!audio || !trackFile) return;
+
+        audio.load();
+
+        if(musicPlayerStore.isPlaying) {
+            void audio.play().catch((error) => {
+                console.error("Audio play failed after track change:", error);
+                musicPlayerStore.pause();
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [musicPlayerStore.currentTrack?.file]);
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        const seekRequestTime = musicPlayerStore.seekRequestTime;
+        if(!audio || seekRequestTime === null) return;
+
+        audio.currentTime = seekRequestTime;
+        musicPlayerStore.clearSeekRequest();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [musicPlayerStore.seekRequestTime]);
+
+    useEffect(() => {
         const audio = audioRef.current;
         if(!audio) return;
 
-        if(musicPlayerStore.isPlaying) {
-            musicPlayerStore.pause();
-            audio.pause();
-            return;
-        }
+        audio.volume = musicPlayerStore.volume / 100;
 
-        try {
-            await audio.play();
-            musicPlayerStore.play();
-        } catch (error) {
-            console.error("Audio play failed:", error);
-            musicPlayerStore.pause();
-        }
+    }, [musicPlayerStore.volume]);
+
+    const togglePlayPause = async () => {
+        musicPlayerStore.togglePlayPause()
     };
 
     const onSeek = (time: number) => {
-        if (!audioRef.current) return;
-
-        audioRef.current.currentTime = time;
-        musicPlayerStore.seek(time);
-    }
+        musicPlayerStore.requestSeek(time);
+    };
 
     const changeTrack = (type: "prev" | "next") => {
         musicPlayerStore.changeTrack(type);
     }
 
     const setVolume = (volume: number) => {
-        if (!audioRef.current) return;
-
-        audioRef.current.volume = volume / 100;
         musicPlayerStore.setVolume(volume);
     }
 
-    return { audioRef, togglePlayPause, onSeek, changeTrack, setVolume };
+    const handleTimeUpdate = useCallback((time: number) => {
+        musicPlayerStore.seek(Math.floor(time));
+    }, []);
+
+    const handleEnded = useCallback(() => {
+        musicPlayerStore.finishTrack();
+    }, []);
+
+    return { audioRef, togglePlayPause, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded };
 }
