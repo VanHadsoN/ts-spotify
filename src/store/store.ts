@@ -2,6 +2,20 @@ import { makeAutoObservable } from 'mobx';
 import type {ITrack} from "@/types/track.types.ts";
 import {TRACKS} from "@/data/tracks.data.ts";
 
+const VOLUME_STORAGE_KEY = "player-volume";
+
+const clampVolume = (value: number): number => Math.min(100, Math.max(0, Math.round(value)));
+
+const getInitialVolume = (): number => {
+    if(typeof window === "undefined") return 85;
+
+    const raw = window.localStorage.getItem(VOLUME_STORAGE_KEY);
+    const parsed = Number(raw);
+
+    if(!Number.isFinite(parsed)) return 85;
+    return clampVolume(parsed);
+}
+
 class MusicPlayerStore {
     isPlaying: boolean = false;
     currentTrack: ITrack | null = TRACKS[0];
@@ -11,6 +25,7 @@ class MusicPlayerStore {
     seekRequestTime: number | null = null;
 
     constructor() {
+        this.volume = getInitialVolume();
         makeAutoObservable(this);
     }
 
@@ -53,7 +68,12 @@ class MusicPlayerStore {
     }
 
     setVolume(volume: number) {
-        this.volume = volume;
+        const normalizedVolume = clampVolume(volume);
+        this.volume = normalizedVolume;
+
+        if(typeof window !== "undefined") {
+            window.localStorage.setItem(VOLUME_STORAGE_KEY, String(normalizedVolume));
+        }
     }
 
     changeTrack(type: "prev" | "next") {
