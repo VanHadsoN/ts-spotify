@@ -2,44 +2,15 @@ import {TrackInfo} from "@/components/ui/track-info/TrackInfo";
 import {musicPlayerStore} from "@/store/store";
 import {Pause, Play, SkipBack, SkipForward, Volume, Volume1, Volume2} from "lucide-react";
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
 import {ProgressBar} from "@/components/ui/progress-bar/ProgressBar.tsx";
 import {useAudioPlayer} from "@/components/elements/player/useAudioPlayer.tsx";
 
 export function AudioPlayerInner() {
-    const { audioRef, togglePlayPause, onSeek, changeTrack, setVolume } = useAudioPlayer();
+    const { audioRef, togglePlayPause, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded } = useAudioPlayer();
     // const isDraggingRef = useRef(false);
 
     const track = musicPlayerStore.currentTrack;
     const trackFile = track?.file;
-    const isPlaying = musicPlayerStore.isPlaying;
-    const seekRequestTime = musicPlayerStore.seekRequestTime;
-
-    useEffect(() => {
-        if (!trackFile) return;
-
-        musicPlayerStore.resetPlayback?.();
-
-        const el = audioRef.current;
-        if(!el) return;
-
-        el.load();
-
-        // если до переключения уже играло - запускаем новый трек сразу
-        if(isPlaying) {
-            void el.play().catch((error) => {
-                console.error("Audio play failed after track change:",error);
-                musicPlayerStore.pause();
-            });
-        }
-    }, [trackFile, isPlaying, audioRef]);
-
-    useEffect(() => {
-        if (seekRequestTime === null) return;
-        if(!audioRef.current) return;
-
-        audioRef.current.currentTime = seekRequestTime;
-    }, [seekRequestTime, audioRef]);
 
     if (!track) return null;
 
@@ -55,11 +26,8 @@ export function AudioPlayerInner() {
         <audio
             ref={audioRef}
             src={trackFile}
-            onTimeUpdate={(e) => {
-                const currentTime = Math.floor(e.currentTarget.currentTime);
-                musicPlayerStore.seek(currentTime);
-            }}
-            onEnded={() => (musicPlayerStore.finishTrack())}
+            onTimeUpdate={(e) => handleTimeUpdate(e.currentTarget.currentTime)}
+            onEnded={handleEnded}
         />
 
         <div className="grid grid-cols-[1fr_8fr_2fr] gap-8 items-center">
