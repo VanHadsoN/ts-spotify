@@ -28,7 +28,7 @@ export const ARTISTS: IArtist[] = [
     {
         name: 'Trevor Jones',
         image: 'https://trevorjonesfilmmusic.com/jpeg%20thumbnails/trevorjones%20revised.JPG',
-        listenersCount: +330000000,
+        listenersCount: 330000000,
         tracks: [],
     },
 ]
