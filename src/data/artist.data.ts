@@ -27,8 +27,8 @@ export const ARTISTS: IArtist[] = [
     },
     {
         name: 'Trevor Jones',
-        image: 'https://trevorjonesfilmmusic.com/jpeg%20thumbnails/trevorjones%20revised.JPG', // нужно найти вручную / через API
-        listenersCount: 274200, // нужно найти количество слушателей
+        image: 'https://trevorjonesfilmmusic.com/jpeg%20thumbnails/trevorjones%20revised.JPG',
+        listenersCount: +330000000,
         tracks: [],
     },
 ]
