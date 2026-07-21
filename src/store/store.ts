@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
-import type {ITrack} from "@/types/track.types.ts";
-import {TRACKS} from "@/data/tracks.data.ts";
+import type { ITrack } from "@/types/track.types.ts";
+import { TRACKS } from "@/data/tracks.data.ts";
+import { recentlyPlayedStore } from "@/store/recently-played.store.ts";
 
 const VOLUME_STORAGE_KEY = "player-volume";
 
@@ -36,6 +37,7 @@ class MusicPlayerStore {
     selectTrack(track: ITrack) {
         this.setTrack(track);
         this.resetPlayback();
+        recentlyPlayedStore.add(track.id);
     }
 
     togglePlayPause() {
