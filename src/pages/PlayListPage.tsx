@@ -3,11 +3,8 @@ import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
 import { Track } from "@/components/elements/track-item/Track.tsx";
-import { TRACKS } from "@/data/tracks.data.ts";
 import { playlistStore } from "@/store/playlist.store.ts";
-import type { ITrack } from "@/types/track.types.ts";
-
-const tracksById = new Map<string, ITrack>(TRACKS.map((track) => [track.id, track]));
+import {resolveTracks} from "@/utils/tracks-by-id.ts";
 
 const decodeParam = (value: string) => {
     try {
@@ -25,9 +22,7 @@ export const PlayListPage = observer(function PlaylistPage() {
 
     const tracks = useMemo(() => {
         if (!playlist) return [];
-        return playlist.trackIds
-            .map((trackId) => tracksById.get(trackId))
-            .filter((track): track is ITrack => Boolean(track));
+        return resolveTracks(playlist.trackIds);
     }, [playlist]);
 
     if (!playlist) {
