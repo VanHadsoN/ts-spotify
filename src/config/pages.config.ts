@@ -17,7 +17,9 @@ export class PagesConfig {
         return '/albums' + (id ? `/${id}` : '');
     }
 
+    static ARTISTS_ROUTE = "/artists/:id";
+
     static ARTISTS(id?: string) {
-        return '/artists' + (id ? `/${id}` : '');
+        return id ? `/artists/${id}` : "/artists";
     }
 }
