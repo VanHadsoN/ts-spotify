@@ -6,6 +6,7 @@ import { PlayListPage } from "@/pages/PlayListPage.tsx";
 import { LikedSongsPage } from "@/pages/LikedSongsPage.tsx";
 import { RecentlyPlayedPage } from "@/pages/RecentlyPlayedPage.tsx";
 import { StubPage } from "@/pages/StubPage.tsx";
+import {ArtistsPage} from "@/pages/ArtistsPage.tsx";
 
 function App() {
     return (
@@ -18,7 +19,8 @@ function App() {
             <Route path={PagesConfig.LIKED_SONGS} element={<LikedSongsPage />} />
             <Route path={PagesConfig.PLAYLIST_ROUTE} element={<PlayListPage />} />
             <Route path={PagesConfig.ALBUMS()} element={<StubPage title="Albums" />} />
-            <Route path={PagesConfig.ARTISTS()} element={<StubPage title="Artists" />} />
+            <Route path={PagesConfig.ARTISTS()} element={<ArtistsPage />} />
+            <Route path={PagesConfig.ARTISTS_ROUTE} element={<ArtistsPage />} />
 
             <Route path="*" element={<Navigate to={PagesConfig.HOME} replace />} />
         </Routes>
