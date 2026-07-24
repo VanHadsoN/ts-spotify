@@ -7,4 +7,5 @@ export interface ITrack {
     duration: number; // in seconds
     cover: string;
     id: string;
+    album: string;
 }
