@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { getAlbums } from "@/utils/albums.ts";
-import { TrackListPage } from "@/pages/TrackListPage.ts";
+import { TrackListPage } from "@/pages/TrackListPage.tsx";
 
 export function AlbumPage() {
     const { id } = useParams<{ id: string }>();
