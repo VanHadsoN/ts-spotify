@@ -13,8 +13,10 @@ export class PagesConfig {
         return `/playlist/${id}`;
     }
 
+    static ALBUMS_ROUTE = "/albums/:id";
+
     static ALBUMS(id?: string) {
-        return '/albums' + (id ? `/${id}` : '');
+        return id ? `/albums/${id}` : "/albums";
     }
 
     static ARTISTS_ROUTE = "/artists/:id";
