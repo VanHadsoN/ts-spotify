@@ -14,7 +14,6 @@ export function AlbumsPage() {
                         <Link to={PagesConfig.ALBUMS(album.id)}>
                             <img src={album.cover} alt={album.name} />
                             <span>{album.name}</span>
-                            <span className="opacity-70">{album.artistName}</span>
                         </Link>
                     </li>
                 ))}
