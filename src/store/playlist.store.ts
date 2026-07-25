@@ -19,6 +19,17 @@ const isPlaylist = (value: unknown): value is Playlist => {
 const isPlaylistArray = (value: unknown): value is Playlist[] =>
     Array.isArray(value) && value.every(isPlaylist);
 
+export type PlaylistMutationResult =
+    | "success"
+    | "empty"
+    | "duplicate"
+    | "not-found";
+
+const normalizeName = (name: string) => name.trim();
+
+const namesEqual = (first: string, second: string) =>
+    normalizeName(first).toLowerCase() === normalizeName(second).toLowerCase();
+
 class PlaylistStore {
     playlists: Playlist[] = readStorageJSON<Playlist[]>(
         STORAGE_KEYS.playlists,
@@ -34,12 +45,53 @@ class PlaylistStore {
         writeStorageJSON(STORAGE_KEYS.playlists, this.playlists);
     }
 
-    createPlaylist(name: string) {
-        if (this.playlists.find(playlist => playlist.name === name)) return;
+    createPlaylist(name: string): PlaylistMutationResult {
+        const normalizedName = normalizeName(name);
 
-        this.playlists.push({ name, trackIds: [] });
+        if(!normalizedName) return "empty";
+
+        const exist = this.playlists.some(playlist =>
+            namesEqual(playlist.name, normalizedName)
+        );
+
+        if(exist) return "duplicate";
+
+        this.playlists.push({
+            name: normalizedName,
+            trackIds: [],
+        });
+
         this.saveToLocalStorage();
+        return "success";
     }
+
+    renamePlaylist(
+        currentName: string,
+        newName: string
+    ) : PlaylistMutationResult {
+        const normalizedName = normalizeName(newName);
+
+        if(!normalizedName) return "empty";
+
+        const playlist = this.playlists.find((item) =>
+            namesEqual(item.name, currentName)
+        );
+
+        if(!playlist) return "not-found";
+
+        const duplicate = this.playlists.some((item) =>
+            item !== playlist && namesEqual(item.name, normalizedName)
+        );
+
+        if(duplicate) return "duplicate";
+
+        playlist.name = normalizedName;
+        this.saveToLocalStorage();
+
+        return "success";
+    }
+
+    deletePlaylist(name: string) : PlaylistMutationResult {}
 
     toggleTrackInPlaylist(playlistName: string, trackId: string) {
         const playlist = this.playlists.find((item) => item.name === playlistName);
