@@ -10,7 +10,7 @@ export class PagesConfig {
     static PLAYLIST_ROUTE = '/playlist/:id';
 
     static PLAYLIST(id: string) {
-        return `/playlist/${id}`;
+        return `/playlist/${encodeURIComponent(id)}`;
     }
 
     static ALBUMS_ROUTE = "/albums/:id";
