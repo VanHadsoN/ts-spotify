@@ -91,7 +91,18 @@ class PlaylistStore {
         return "success";
     }
 
-    deletePlaylist(name: string) : PlaylistMutationResult {}
+    deletePlaylist(name: string) : PlaylistMutationResult {
+        const playlistIndex = this.playlists.findIndex((item) =>
+            namesEqual(item.name, name)
+        );
+
+        if(playlistIndex === -1) return "not-found";
+
+        this.playlists.splice(playlistIndex, 1);
+        this.saveToLocalStorage();
+
+        return "success";
+    }
 
     toggleTrackInPlaylist(playlistName: string, trackId: string) {
         const playlist = this.playlists.find((item) => item.name === playlistName);
