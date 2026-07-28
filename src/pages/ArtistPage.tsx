@@ -8,7 +8,7 @@ import { TrackListPage } from "@/pages/TrackListPage.tsx";
 const decodeParam = (value: string) => {
     try {
         return decodeURIComponent(value);
-    } catch (error) {
+    } catch {
         return value;
     }
 };
