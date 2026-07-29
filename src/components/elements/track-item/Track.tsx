@@ -28,9 +28,7 @@ export const Track = observer(function Track({track}: Props) {
                            fill={favoriteStore.isFavorite(track.id) ? 'var(--color-primary)' : 'none'}
                     />
                 </button>
-                <button>
                     <AddToPlaylist track={track} />
-                </button>
             </div>
         </div>
     );
