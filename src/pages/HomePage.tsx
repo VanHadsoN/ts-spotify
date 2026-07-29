@@ -9,18 +9,19 @@ import { TRACKS } from "@/data/tracks.data.ts";
 export function HomePage() {
     const [searchTerm, setSearchTerm] = useQueryState("q");
 
+    const normalizedSearchTerm = searchTerm?.trim().toLowerCase() ?? "";
+
     const filteredTracks = useMemo(() => {
-        if (!searchTerm) return TRACKS;
+        if(!normalizedSearchTerm) return TRACKS;
 
-        const query = searchTerm.toLocaleLowerCase();
+        return TRACKS.filter(
+            (track) =>
+                track.name.toLowerCase().includes(normalizedSearchTerm) ||
+                track.artist.name.toLowerCase().includes(normalizedSearchTerm),
+        );
+    }, [normalizedSearchTerm]);
 
-        return TRACKS.filter((track) => {
-            return (
-                track.name.toLocaleLowerCase().includes(query) ||
-                track.artist.name.toLocaleLowerCase().includes(query)
-            );
-        });
-    }, [searchTerm]);
+    const hasNoResults = normalizedSearchTerm.length > 0 && filteredTracks.length === 0;
 
     return (
         <div>
@@ -51,9 +52,15 @@ export function HomePage() {
             </div>
 
             <div>
-                {filteredTracks.map((track) => (
-                    <Track key={track.id} track={track} />
-                ))}
+                {hasNoResults ? (
+                    <p role="status" className="py-8 text-center text-white/60">
+                        No results found for this search {searchTerm?.trim()}
+                    </p>
+                ) : (
+                    filteredTracks.map((track) => (
+                        <Track key={track.id} track={track} />
+                    ))
+                )}
             </div>
         </div>
     );
