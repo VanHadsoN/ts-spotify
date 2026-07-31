@@ -43,7 +43,7 @@ export const RAW_TRACKS: RawTrack[] = [
         file: "/audio/Trevor Jones - Last of the Mohikans Theme.mp3",
         artist: ARTISTS[4],
         cover: "/cover/Last_of_the_Mohikans_Theme.jpg",
-        duration: 104, // сек
+        duration: 167, // сек
     },
 ];
 
