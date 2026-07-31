@@ -6,13 +6,15 @@ import {ProgressBar} from "@/components/ui/progress-bar/ProgressBar.tsx";
 import {useAudioPlayer} from "@/components/elements/player/useAudioPlayer.tsx";
 
 export function AudioPlayerInner() {
-    const { audioRef, togglePlayPause, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded } = useAudioPlayer();
+    const { audioRef, togglePlayPause, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata } = useAudioPlayer();
     // const isDraggingRef = useRef(false);
 
     const track = musicPlayerStore.currentTrack;
     const trackFile = track?.file;
 
     if (!track) return null;
+
+    const duration = musicPlayerStore.currentDuration ?? track?.duration;
 
     return <div className="w-full py-5 px-10 bg-player-bg
             border-t border-white/10
@@ -26,6 +28,7 @@ export function AudioPlayerInner() {
         <audio
             ref={audioRef}
             src={trackFile}
+            onLoadedMetadata={(e) => handleLoadedMetadata(e.currentTarget.duration)}
             onTimeUpdate={(e) => handleTimeUpdate(e.currentTarget.currentTime)}
             onEnded={handleEnded}
         />
@@ -61,7 +64,7 @@ export function AudioPlayerInner() {
             {/* ProgressBar */}
             <ProgressBar
                 currentValue={musicPlayerStore.currentTime}
-                value={track.duration}
+                value={duration}
                 progress={musicPlayerStore.progress}
                 onSeek={(time: number) => onSeek(time)}
                 isTextDisplayed
