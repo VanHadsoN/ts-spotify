@@ -77,5 +77,9 @@ export const useAudioPlayer = () => {
         musicPlayerStore.finishTrack();
     }, []);
 
-    return { audioRef, togglePlayPause, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded };
+    const handleLoadedMetadata = useCallback((duration: number) => {
+        musicPlayerStore.setDuration(duration);
+    }, []);
+
+    return { audioRef, togglePlayPause, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata };
 }
