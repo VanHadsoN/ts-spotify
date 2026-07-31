@@ -11,7 +11,7 @@ export const RAW_TRACKS: RawTrack[] = [
         file: "/audio/Aerosmith - Train Kept A Rollin'.mp3",
         artist: ARTISTS[0],
         cover: "/cover/Train_Kept_A_Rollin.jpg",
-        duration: 333, // сек
+        duration: 335, // сек
     },
     {
         name: "Green River",
@@ -19,7 +19,7 @@ export const RAW_TRACKS: RawTrack[] = [
         file: "/audio/Creedence Clearwater Revival - Green River.mp3",
         artist: ARTISTS[1],
         cover: "/cover/Green_River.jpg",
-        duration: 156, // сек
+        duration: 136, // сек
     },
     {
         name: "Zitti e buoni",
@@ -27,7 +27,7 @@ export const RAW_TRACKS: RawTrack[] = [
         file: "/audio/Maneskin - Zitti e buoni.mp3",
         artist: ARTISTS[2],
         cover: "/cover/Zitti_e_buoni.jpg",
-        duration: 193, // сек
+        duration: 194, // сек
     },
     {
         name: "Little By Little",
@@ -43,7 +43,7 @@ export const RAW_TRACKS: RawTrack[] = [
         file: "/audio/Trevor Jones - Last of the Mohikans Theme.mp3",
         artist: ARTISTS[4],
         cover: "/cover/Last_of_the_Mohikans_Theme.jpg",
-        duration: 167, // сек
+        duration: 169, // сек
     },
 ];
 
