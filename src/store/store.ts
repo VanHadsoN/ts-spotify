@@ -53,8 +53,8 @@ class MusicPlayerStore {
     }
 
     finishTrack() {
-        this.pause();
         this.seekRequestTime = null;
+        this.changeTrack("next");
     }
 
     seek(time: number) {
