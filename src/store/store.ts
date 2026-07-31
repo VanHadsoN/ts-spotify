@@ -22,6 +22,7 @@ class MusicPlayerStore {
     currentTrack: ITrack | null = TRACKS[0];
     volume: number = 85;
     currentTime: number = 0;
+    currentDuration: number | null = null;
     progress: number = 0;
     seekRequestTime: number | null = null;
 
@@ -58,7 +59,8 @@ class MusicPlayerStore {
     }
 
     seek(time: number) {
-        const duration = this.currentTrack?.duration || 1;
+        const duration = this.currentDuration ?? this.currentTrack?.duration ?? 1;
+
         this.currentTime = time;
         this.progress = Math.min(100, Math.max(0, (time / duration) * 100));
     }
@@ -67,6 +69,7 @@ class MusicPlayerStore {
     resetPlayback() {
         this.currentTime = 0;
         this.progress = 0;
+        this.currentDuration = null;
     }
 
     setVolume(volume: number) {
@@ -102,6 +105,12 @@ class MusicPlayerStore {
 
     clearSeekRequest() {
         this.seekRequestTime = null;
+    }
+
+    setDuration(duration: number) {
+        if(!Number.isFinite(duration) || duration <= 0) return;
+
+        this.currentDuration = Math.floor(duration);
     }
 }
 
