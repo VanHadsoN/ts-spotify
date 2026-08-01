@@ -1,39 +1,37 @@
 import { useCallback,useEffect, useRef } from "react";
 import { musicPlayerStore } from "@/store/store.ts";
 
+const playAudio = async (audio: HTMLAudioElement) => {
+    try {
+        await audio.play();
+    } catch (error) {
+        if(
+            error instanceof DOMException && error.name === "AbortError"
+        ) {
+            return;
+        }
+        console.error("Audio playback failed:", error);
+        musicPlayerStore.pause();
+    }
+};
+
 export const useAudioPlayer = () => {
     const audioRef = useRef<HTMLAudioElement>(null);
 
+    const isPlaying = musicPlayerStore.isPlaying;
+    const trackFile = musicPlayerStore.currentTrack?.file;
+
     useEffect(() => {
         const audio = audioRef.current;
-        if(!audio) return;
 
-        if(musicPlayerStore.isPlaying) {
-            void audio.play().catch((error) => {
-                console.error("Audio play failed:", error);
-                musicPlayerStore.pause();
-            });
+        if(!audio || !trackFile) return;
+
+        if(isPlaying) {
+            void playAudio(audio);
         } else {
             audio.pause();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [musicPlayerStore.isPlaying]);
-
-    useEffect(() => {
-        const audio = audioRef.current;
-        const trackFile = musicPlayerStore.currentTrack?.file;
-        if(!audio || !trackFile) return;
-
-        audio.load();
-
-        if(musicPlayerStore.isPlaying) {
-            void audio.play().catch((error) => {
-                console.error("Audio play failed after track change:", error);
-                musicPlayerStore.pause();
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [musicPlayerStore.currentTrack?.file]);
+    }, [isPlaying, trackFile]);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -44,10 +42,7 @@ export const useAudioPlayer = () => {
         musicPlayerStore.clearSeekRequest();
 
         if(musicPlayerStore.isPlaying && audio.paused) {
-            void audio.play().catch((error) => {
-                console.error("Audio play failed:", error);
-                musicPlayerStore.pause();
-            })
+            void playAudio(audio);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [musicPlayerStore.seekRequestTime]);
@@ -60,8 +55,8 @@ export const useAudioPlayer = () => {
 
     }, [musicPlayerStore.volume]);
 
-    const togglePlayPause = async () => {
-        musicPlayerStore.togglePlayPause()
+    const togglePlayPause = () => {
+        musicPlayerStore.togglePlayPause();
     };
 
     const onSeek = (time: number) => {
