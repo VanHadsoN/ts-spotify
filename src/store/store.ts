@@ -17,6 +17,18 @@ const getInitialVolume = (): number => {
     return clampVolume(parsed);
 }
 
+const shuffle = <T,>(items: T[]) => {
+    const result = [...items];
+
+    for(let index = result.length - 1; index > 0; index--) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [result[index], result[randomIndex]] = [result[randomIndex], result[index]];
+    }
+    return result;
+};
+
+export type RepeatMode = "off" | "all" | "one";
+
 class MusicPlayerStore {
     isPlaying: boolean = false;
     currentTrack: ITrack | null = TRACKS[0];
@@ -25,20 +37,69 @@ class MusicPlayerStore {
     currentDuration: number | null = null;
     progress: number = 0;
     seekRequestTime: number | null = null;
+    repeatMode: RepeatMode = "off";
+    isShuffleEnabled = false;
 
     constructor() {
         this.volume = getInitialVolume();
         makeAutoObservable(this);
     }
 
+    private playOrder: string[] = TRACKS.map(({ id }) => id);
+    private playOrderIndex = 0;
+
     setTrack(track: ITrack | null) {
         this.currentTrack = track;
     }
 
     selectTrack(track: ITrack) {
+        this.activateTrack(track);
+        this.rebuildPlayOrder();
+    }
+
+    private activateTrack(track: ITrack) {
         this.setTrack(track);
         this.resetPlayback();
         recentlyPlayedStore.add(track.id);
+    }
+
+    toggleShuffle() {
+        this.isShuffleEnabled = !this.isShuffleEnabled;
+        this.rebuildPlayOrder();
+    }
+
+    cycleRepeatMode() {
+        const modes: RepeatMode[] = ["off", "all", "one"];
+        const currentIndex = modes.indexOf(this.repeatMode);
+
+        this.repeatMode = modes[(currentIndex + 1) % modes.length];
+    }
+
+    private rebuildPlayOrder() {
+        const currentTrackId = this.currentTrack?.id;
+        const trackIds = TRACKS.map(({ id }) => id);
+
+        if(!currentTrackId) {
+            this.playOrder = trackIds;
+            this.playOrderIndex = 0;
+            return;
+        }
+
+        if(this.isShuffleEnabled) {
+            const remainingTrackIds = trackIds.filter((id) => id !== currentTrackId)
+
+            this.playOrder = [
+                currentTrackId,
+                ...shuffle(remainingTrackIds),
+            ];
+            this.playOrderIndex = 0;
+            return;
+        }
+
+        this.playOrder = trackIds;
+
+        const currentIndex = trackIds.indexOf(currentTrackId);
+        this.playOrderIndex = currentIndex === -1 ? 0 : currentIndex;
     }
 
     togglePlayPause() {
@@ -54,8 +115,13 @@ class MusicPlayerStore {
     }
 
     finishTrack() {
+        if(this.repeatMode === "one") {
+            this.requestSeek(0);
+            return;
+        }
+
         this.seekRequestTime = null;
-        this.changeTrack("next");
+        this.changeTrack("next", true);
     }
 
     seek(time: number) {
@@ -81,21 +147,46 @@ class MusicPlayerStore {
         }
     }
 
-    changeTrack(type: "prev" | "next") {
-        if (!this.currentTrack) return;
+    changeTrack(type: "prev" | "next", triggeredByEnd = false) {
+        if(!this.currentTrack || this.playOrder.length === 0) return;
 
-        const currentIndex = TRACKS.findIndex(
-            track => track.id === this.currentTrack?.id
-        )
+        const offset = type === "next" ? 1 : -1;
+        const targetIndex = this.playOrderIndex + offset;
 
-        if(currentIndex === -1) return;
+        const isOutsideQueue = targetIndex < 0 || targetIndex >= this.playOrder.length;
 
-        const nextIndex =
-            type === "next"
-                ? (currentIndex + 1) % TRACKS.length
-                : (currentIndex - 1 + TRACKS.length) % TRACKS.length
+        if(isOutsideQueue) {
+            // Без repeat all переход за границы очереди запрещён
+            if(this.repeatMode !== "all") {
+                if(triggeredByEnd) {
+                    this.pause();
+                }
 
-    this.selectTrack(TRACKS[nextIndex]);
+                return;
+            }
+
+            if(this.isShuffleEnabled && type === "next") {
+                /*
+                * Создаём новый случайный цикл.
+                * Текущий трек будет первым, поэтому выбираем индекс 1,
+                * чтобы он не повторился сразу.
+                */
+                this.rebuildPlayOrder();
+                this.playOrderIndex = Math.min(1, this.playOrder.length - 1);
+            } else {
+                // Обычное циклическое переключение
+                this.playOrderIndex = type === "next" ? 0 : this.playOrder.length - 1;
+            }
+        } else {
+            this.playOrderIndex = targetIndex;
+        }
+
+        const targetTrackId = this.playOrder[this.playOrderIndex];
+        const targetTrack = TRACKS.find(({ id }) => id === targetTrackId);
+
+        if(targetTrack) {
+            this.activateTrack(targetTrack);
+        }
     }
 
     requestSeek(time: number) {
