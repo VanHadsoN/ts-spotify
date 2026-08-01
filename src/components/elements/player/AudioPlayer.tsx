@@ -1,6 +1,6 @@
 import {TrackInfo} from "@/components/ui/track-info/TrackInfo";
 import {musicPlayerStore} from "@/store/store";
-import {Pause, Play, SkipBack, SkipForward, Volume, Volume1, Volume2} from "lucide-react";
+import {Pause, Play, Repeat, Repeat1, Shuffle, SkipBack, SkipForward, Volume, Volume1, Volume2} from "lucide-react";
 import { observer } from "mobx-react-lite";
 import {ProgressBar} from "@/components/ui/progress-bar/ProgressBar.tsx";
 import {useAudioPlayer} from "@/components/elements/player/useAudioPlayer.tsx";
@@ -35,29 +35,52 @@ export function AudioPlayerInner() {
 
         <div className="grid grid-cols-[1fr_8fr_2fr] gap-8 items-center">
             <div className="flex items-center gap-2.5">
-                <button className="opacity-80 hover:opacity-100 duration-300"
-                    onClick={() => changeTrack('prev')}>
-                    <SkipBack size={20}/>
+                <button
+                    type="button"
+                    aria-label="Shuffle tracks"
+                    aria-pressed={musicPlayerStore.isShuffleEnabled}
+                    className={musicPlayerStore.isShuffleEnabled ? "text-primary" : "opacity-80 hover:opacity-100 duration-300"}
+                    onClick={() => musicPlayerStore.toggleShuffle()}
+                >
+                    <Shuffle size={18} />
                 </button>
 
-                <button className="rounded-full bg-gradient-to-r from-[#3C3D41] to-[#444549]
-                p-3 border border-white/5 border-solid duration-300
-                hover:shadow text-primary"
-                onClick={togglePlayPause}>
-
-                    {musicPlayerStore.isPlaying ? (
-                        <Pause size={20}/>
-                        ) : (
-                        <Play
-                            size={20}
-                            className="group-hover:fill-primary"
-                        />
-                    )}
+                <button
+                    type="button"
+                    aria-label="Previous track"
+                    className="opacity-80 hover:opacity-100 duration-300"
+                    onClick={() => changeTrack("prev")}
+                >
+                    <SkipBack size={20} />
                 </button>
 
-                <button className="opacity-80 hover:opacity-100 duration-300"
-                    onClick={() => changeTrack('next')}>
-                    <SkipForward size={20}/>
+                <button
+                    type="button"
+                    aria-label={musicPlayerStore.isPlaying ? "Pause" : "Play"}
+                    className="rounded-full bg-gradient-to-r from-[#3C3D41] to-[#444549]
+                        p-3 border border-white/5 duration-300 hover:shadow text-primary"
+                    onClick={togglePlayPause}
+                >
+                    {musicPlayerStore.isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                </button>
+
+                <button
+                    type="button"
+                    aria-label="Next track"
+                    className="opacity-80 hover:opacity-100 duration-300"
+                    onClick={() => changeTrack("next")}
+                >
+                    <SkipForward size={20} />
+                </button>
+
+                {/* Цикл режимов: off → all → one */}
+                <button
+                    type="button"
+                    aria-label={`Repeat mode: ${musicPlayerStore.repeatMode}`}
+                    className={musicPlayerStore.repeatMode === "off" ? "opacity-80 hover:opacity-100 duration-300" : "text-primary"}
+                    onClick={() => musicPlayerStore.cycleRepeatMode()}
+                >
+                    {musicPlayerStore.repeatMode === "one" ? <Repeat1 size={18} /> : <Repeat size={18} />}
                 </button>
             </div>
 
