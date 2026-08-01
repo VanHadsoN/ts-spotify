@@ -42,6 +42,13 @@ export const useAudioPlayer = () => {
 
         audio.currentTime = seekRequestTime;
         musicPlayerStore.clearSeekRequest();
+
+        if(musicPlayerStore.isPlaying && audio.paused) {
+            void audio.play().catch((error) => {
+                console.error("Audio play failed:", error);
+                musicPlayerStore.pause();
+            })
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [musicPlayerStore.seekRequestTime]);
 
