@@ -55,6 +55,17 @@ export const useAudioPlayer = () => {
 
     }, [musicPlayerStore.volume]);
 
+    useEffect(() => {
+        const audio = audioRef.current;
+        if(!audio) return;
+
+        audio.muted = musicPlayerStore.isMuted;
+    }, [musicPlayerStore.isMuted]);
+
+    const toggleMute = () => {
+        musicPlayerStore.toggleMute();
+    }
+
     const togglePlayPause = () => {
         musicPlayerStore.togglePlayPause();
     };
@@ -83,5 +94,5 @@ export const useAudioPlayer = () => {
         musicPlayerStore.setDuration(duration);
     }, []);
 
-    return { audioRef, togglePlayPause, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata };
+    return { audioRef, togglePlayPause, toggleMute, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata };
 }
