@@ -41,6 +41,7 @@ class MusicPlayerStore {
     seekRequestTime: number | null = null;
     repeatMode: RepeatMode = "off";
     isShuffleEnabled = false;
+    isMuted = false;
 
     constructor() {
         this.volume = getInitialVolume();
@@ -68,6 +69,10 @@ class MusicPlayerStore {
     toggleShuffle() {
         this.isShuffleEnabled = !this.isShuffleEnabled;
         this.rebuildPlayOrder();
+    }
+
+    toggleMute() {
+        this.isMuted = !this.isMuted;
     }
 
     cycleRepeatMode() {
@@ -144,6 +149,11 @@ class MusicPlayerStore {
         const normalizedVolume = clampVolume(volume);
 
         this.volume = normalizedVolume;
+
+        if(normalizedVolume > 0) {
+            this.isMuted = false;
+        }
+
         writeStorageJSON(STORAGE_KEYS.volume, normalizedVolume);
     }
 
