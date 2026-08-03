@@ -1,12 +1,12 @@
 import {TrackInfo} from "@/components/ui/track-info/TrackInfo";
 import {musicPlayerStore} from "@/store/store";
-import {Pause, Play, Repeat, Repeat1, Shuffle, SkipBack, SkipForward, Volume, Volume1, Volume2} from "lucide-react";
+import {Pause, Play, Repeat, Repeat1, Shuffle, SkipBack, SkipForward, Volume1, Volume2, VolumeX} from "lucide-react";
 import { observer } from "mobx-react-lite";
 import {ProgressBar} from "@/components/ui/progress-bar/ProgressBar.tsx";
 import {useAudioPlayer} from "@/components/elements/player/useAudioPlayer.tsx";
 
 export function AudioPlayerInner() {
-    const { audioRef, togglePlayPause, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata } = useAudioPlayer();
+    const { audioRef, togglePlayPause, toggleMute, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata } = useAudioPlayer();
     // const isDraggingRef = useRef(false);
 
     const track = musicPlayerStore.currentTrack;
@@ -93,13 +93,22 @@ export function AudioPlayerInner() {
                 isTextDisplayed
             />
 
-            <div className="pl-6 max-w-36 grid grid-cols-[1fr_8fr] gap-1 items-center">
-                {
-                    musicPlayerStore.volume === 0 ? (<Volume />) :
-                    musicPlayerStore.volume < 50 ? (<Volume1 />) :
-                    (<Volume2 />
-                    )
-                }
+            <div className="grid w-full max-w-40 grid-cols-[auto_1fr] items-center gap-3 pl-6">
+                <button
+                    type="button"
+                    aria-label={musicPlayerStore.isMuted ? "Unmute" : "Mute"}
+                    aria-pressed={musicPlayerStore.isMuted}
+                    className="shrink-0 opacity-80 duration-300 hover:opacity-100"
+                    onClick={toggleMute}
+                >
+                    {musicPlayerStore.isMuted || musicPlayerStore.volume === 0 ? (
+                        <VolumeX />
+                    ) : musicPlayerStore.volume < 50 ? (
+                        <Volume1 />
+                    ) : (
+                        <Volume2 />
+                    )}
+                </button>
 
                 <ProgressBar
                     currentValue={musicPlayerStore.volume}
