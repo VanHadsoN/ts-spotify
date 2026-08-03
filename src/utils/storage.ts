@@ -2,6 +2,7 @@ export const STORAGE_KEYS = {
     favorites: 'favorites',
     playlists: 'playlists',
     recentlyPlayed: 'recently-played',
+    volume: 'player-volume',
 } as const;
 
 const isBrowser = (): boolean =>
