@@ -2,20 +2,22 @@ import { makeAutoObservable } from 'mobx';
 import type { ITrack } from "@/types/track.types.ts";
 import { TRACKS } from "@/data/tracks.data.ts";
 import { recentlyPlayedStore } from "@/store/recently-played.store.ts";
+import { readStorageJSON, STORAGE_KEYS, writeStorageJSON } from "@/utils/storage.ts";
 
-const VOLUME_STORAGE_KEY = "player-volume";
+const DEFAULT_VOLUME = 85;
 
 const clampVolume = (value: number): number => Math.min(100, Math.max(0, Math.round(value)));
 
 const getInitialVolume = (): number => {
-    if(typeof window === "undefined") return 85;
+    const savedVolume = readStorageJSON<number>(
+        STORAGE_KEYS.volume,
+        DEFAULT_VOLUME,
+        (value): value is number =>
+            typeof value === "number" && Number.isFinite(value),
+    );
 
-    const raw = window.localStorage.getItem(VOLUME_STORAGE_KEY);
-    const parsed = Number(raw);
-
-    if(!Number.isFinite(parsed)) return 85;
-    return clampVolume(parsed);
-}
+    return clampVolume(savedVolume);
+};
 
 const shuffle = <T,>(items: T[]) => {
     const result = [...items];
@@ -140,11 +142,9 @@ class MusicPlayerStore {
 
     setVolume(volume: number) {
         const normalizedVolume = clampVolume(volume);
-        this.volume = normalizedVolume;
 
-        if(typeof window !== "undefined") {
-            window.localStorage.setItem(VOLUME_STORAGE_KEY, String(normalizedVolume));
-        }
+        this.volume = normalizedVolume;
+        writeStorageJSON(STORAGE_KEYS.volume, normalizedVolume);
     }
 
     changeTrack(type: "prev" | "next", triggeredByEnd = false) {
