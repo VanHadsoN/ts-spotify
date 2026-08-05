@@ -51,6 +51,8 @@ class MusicPlayerStore {
     private playOrder: string[] = TRACKS.map(({ id }) => id);
     private playOrderIndex = 0;
 
+    playbackError: string | null = null;
+
     setTrack(track: ITrack | null) {
         this.currentTrack = track;
     }
@@ -143,6 +145,7 @@ class MusicPlayerStore {
         this.currentTime = 0;
         this.progress = 0;
         this.currentDuration = null;
+        this.clearPlaybackError();
     }
 
     setVolume(volume: number) {
@@ -212,6 +215,14 @@ class MusicPlayerStore {
         if(!Number.isFinite(duration) || duration <= 0) return;
 
         this.currentDuration = Math.floor(duration);
+    }
+
+    setPlaybackError(message: string | null) {
+        this.playbackError = message;
+    }
+
+    clearPlaybackError() {
+        this.playbackError = null;
     }
 }
 
