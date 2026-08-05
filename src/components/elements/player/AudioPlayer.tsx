@@ -6,7 +6,7 @@ import {ProgressBar} from "@/components/ui/progress-bar/ProgressBar.tsx";
 import {useAudioPlayer} from "@/components/elements/player/useAudioPlayer.tsx";
 
 export function AudioPlayerInner() {
-    const { audioRef, togglePlayPause, toggleMute, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata } = useAudioPlayer();
+    const { audioRef, togglePlayPause, toggleMute, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata, handleAudioError } = useAudioPlayer();
     // const isDraggingRef = useRef(false);
 
     const track = musicPlayerStore.currentTrack;
@@ -31,6 +31,7 @@ export function AudioPlayerInner() {
             onLoadedMetadata={(e) => handleLoadedMetadata(e.currentTarget.duration)}
             onTimeUpdate={(e) => handleTimeUpdate(e.currentTarget.currentTime)}
             onEnded={handleEnded}
+            onError={handleAudioError}
         />
 
         <div className="grid grid-cols-[1fr_8fr_2fr] gap-8 items-center">
@@ -118,6 +119,11 @@ export function AudioPlayerInner() {
                     isTextDisplayed={false}
                 />
             </div>
+            {musicPlayerStore.playbackError && (
+                <p role="alert" className="text-sm text-red-400 col-span-3">
+                    {musicPlayerStore.playbackError}
+                </p>
+            )}
         </div>
     </div>
 }
