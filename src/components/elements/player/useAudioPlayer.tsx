@@ -4,14 +4,23 @@ import { musicPlayerStore } from "@/store/store.ts";
 const playAudio = async (audio: HTMLAudioElement) => {
     try {
         await audio.play();
+        musicPlayerStore.clearPlaybackError();
     } catch (error) {
         if(
             error instanceof DOMException && error.name === "AbortError"
         ) {
             return;
         }
-        console.error("Audio playback failed:", error);
+
         musicPlayerStore.pause();
+
+        if(error instanceof DOMException && error.name === "NotAllowedError") {
+            musicPlayerStore.setPlaybackError("Playback was blocked. Press Play to continue");
+            return;
+        }
+
+        musicPlayerStore.setPlaybackError("Failed to play this track");
+        console.error("Audio playback failed:", error);
     }
 };
 
@@ -94,5 +103,18 @@ export const useAudioPlayer = () => {
         musicPlayerStore.setDuration(duration);
     }, []);
 
-    return { audioRef, togglePlayPause, toggleMute, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata };
+    const handleAudioError = useCallback(() => {
+        const audio = audioRef.current;
+        const code = audio?.error?.code;
+
+        musicPlayerStore.pause();
+
+        musicPlayerStore.setPlaybackError(
+            code === MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED
+                ? "Audio file is missing or unsupported"
+                : "Audio file is unavailable"
+        );
+    }, []);
+
+    return { audioRef, togglePlayPause, toggleMute, onSeek, changeTrack, setVolume, handleTimeUpdate, handleEnded, handleLoadedMetadata, handleAudioError };
 }
