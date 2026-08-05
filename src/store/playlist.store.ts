@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { readStorageJSON, STORAGE_KEYS, writeStorageJSON } from "@/utils/storage.ts";
 
-type Playlist = {
+export type Playlist = {
     name: string;
     trackIds: string[];
 };
@@ -30,7 +30,7 @@ const normalizeName = (name: string) => name.trim();
 const namesEqual = (first: string, second: string) =>
     normalizeName(first).toLowerCase() === normalizeName(second).toLowerCase();
 
-class PlaylistStore {
+export class PlaylistStore {
     playlists: Playlist[] = readStorageJSON<Playlist[]>(
         STORAGE_KEYS.playlists,
         [],

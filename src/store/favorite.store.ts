@@ -4,7 +4,7 @@ import { readStorageJSON, STORAGE_KEYS, writeStorageJSON } from "@/utils/storage
 const isStringArray = (value: unknown): value is string[] =>
     Array.isArray(value) && value.every((item) => typeof item === "string");
 
-class FavoriteStore {
+export class FavoriteStore {
     favoritesTrackIds: string[] = readStorageJSON<string[]>(
         STORAGE_KEYS.favorites,
         [],

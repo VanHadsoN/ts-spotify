@@ -29,6 +29,9 @@ export const useAudioPlayer = () => {
 
     const isPlaying = musicPlayerStore.isPlaying;
     const trackFile = musicPlayerStore.currentTrack?.file;
+    const seekRequestTime = musicPlayerStore.seekRequestTime;
+    const volume = musicPlayerStore.volume;
+    const isMuted = musicPlayerStore.isMuted;
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -44,7 +47,6 @@ export const useAudioPlayer = () => {
 
     useEffect(() => {
         const audio = audioRef.current;
-        const seekRequestTime = musicPlayerStore.seekRequestTime;
         if(!audio || seekRequestTime === null) return;
 
         audio.currentTime = seekRequestTime;
@@ -53,23 +55,22 @@ export const useAudioPlayer = () => {
         if(musicPlayerStore.isPlaying && audio.paused) {
             void playAudio(audio);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [musicPlayerStore.seekRequestTime]);
+    }, [seekRequestTime]);
 
     useEffect(() => {
         const audio = audioRef.current;
         if(!audio) return;
 
-        audio.volume = musicPlayerStore.volume / 100;
+        audio.volume = volume / 100;
 
-    }, [musicPlayerStore.volume]);
+    }, [volume]);
 
     useEffect(() => {
         const audio = audioRef.current;
         if(!audio) return;
 
-        audio.muted = musicPlayerStore.isMuted;
-    }, [musicPlayerStore.isMuted]);
+        audio.muted = isMuted;
+    }, [isMuted]);
 
     const toggleMute = () => {
         musicPlayerStore.toggleMute();

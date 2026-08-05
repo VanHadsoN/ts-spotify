@@ -5,21 +5,17 @@ import { useQueryState } from "nuqs";
 import { SearchField } from "@/components/elements/search-field/SearchField.tsx";
 import { Track } from "@/components/elements/track-item/Track.tsx";
 import { TRACKS } from "@/data/tracks.data.ts";
+import { filterTracks } from "@/utils/filter-tracks.ts";
 
 export function HomePage() {
     const [searchTerm, setSearchTerm] = useQueryState("q");
 
     const normalizedSearchTerm = searchTerm?.trim().toLowerCase() ?? "";
 
-    const filteredTracks = useMemo(() => {
-        if(!normalizedSearchTerm) return TRACKS;
-
-        return TRACKS.filter(
-            (track) =>
-                track.name.toLowerCase().includes(normalizedSearchTerm) ||
-                track.artist.name.toLowerCase().includes(normalizedSearchTerm),
-        );
-    }, [normalizedSearchTerm]);
+    const filteredTracks = useMemo(
+        () => filterTracks(TRACKS, normalizedSearchTerm),
+        [normalizedSearchTerm],
+    );
 
     const hasNoResults = normalizedSearchTerm.length > 0 && filteredTracks.length === 0;
 

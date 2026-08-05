@@ -31,7 +31,7 @@ const shuffle = <T,>(items: T[]) => {
 
 export type RepeatMode = "off" | "all" | "one";
 
-class MusicPlayerStore {
+export class MusicPlayerStore {
     isPlaying: boolean = false;
     currentTrack: ITrack | null = TRACKS[0];
     volume: number = 85;
