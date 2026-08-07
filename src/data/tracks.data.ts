@@ -5,6 +5,20 @@ import {TRACK_DURATIONS} from "@/data/track-durations.generated.ts";
 
 type RawTrack = Omit<ITrack, "id" | "duration">;
 
+const durations: Readonly<Record<string, unknown>> = TRACK_DURATIONS;
+
+const getTrackDuration = (file: string): number => {
+    const duration = durations[file];
+
+    if(
+        typeof duration !== "number" ||
+        !Number.isFinite(duration) ||
+        duration <= 0
+    ) { throw new Error(`Duration is missing or invalid for track: ${file}`); }
+
+    return duration;
+};
+
 export const RAW_TRACKS: RawTrack[] = [
     {
         name: "Train Kept A Rollin",
@@ -43,10 +57,8 @@ export const RAW_TRACKS: RawTrack[] = [
     },
 ];
 
-const durations: Readonly<Record<string, number>> = TRACK_DURATIONS;
-
 export const TRACKS: ITrack[] = RAW_TRACKS.map((track) => ({
     ...track,
     id: generateTrackId(track.file, track.artist.name),
-    duration: durations[track.file],
+    duration: getTrackDuration(track.file),
 }));
