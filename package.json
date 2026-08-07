@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "generate:durations": "node scripts/generate-track-durations.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
