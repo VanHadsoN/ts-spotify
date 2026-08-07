@@ -2,7 +2,6 @@ import { readdir, rename, writeFile } from "node:fs/promises";
 import { extname, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseFile } from "music-metadata";
-import {readFile} from "node:fs";
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(scriptDirectory, "..");
@@ -59,16 +58,15 @@ const generateDurations = async () => {
         .join("\n");
 
     const generatedFile = `// Этот файл создан автоматически.
-        // Не редактируйте его вручную
-        export const TRACK_DURATIONS: Readonly<Record<string, number>> = {${entries}}`;
+        // Не редактируйте его вручную.
 
-        await writeFile(temporaryOutputFile, generatedFile, "utf8");
-        await rename(temporaryOutputFile, outputFile);
+        export const TRACK_DURATIONS = Object.freeze({${entries}});`;
 
-        console.log(
-            `${audioFiles.length} tracks have been recorded to ${outputFile}`,
-        );
-};
+    await writeFile(temporaryOutputFile, generatedFile, "utf8");
+    await rename(temporaryOutputFile, outputFile);
+
+    console.log(`${audioFiles.length} tracks have been recorded to ${outputFile}`);
+    };
 
 generateDurations().catch((error) => {
     console.error("Duration generation error:", error);
