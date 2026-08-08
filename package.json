@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc -b --noEmit",
-    "generate:durations": "node scripts/generate-track-durations.mjs"
+    "generate:durations": "node scripts/generate-track-durations.mjs",
+    "predev": "pnpm generate:durations",
+    "prebuild": "pnpm generate:durations"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
