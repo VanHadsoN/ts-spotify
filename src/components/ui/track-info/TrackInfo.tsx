@@ -34,11 +34,15 @@ export const TrackInfo = observer(
             }
         };
 
+        const playbackLabel = isActive && musicPlayerStore.isPlaying ? `Pause ${title}` : `Play ${title}`;
+
         return (
             <div className="flex items-center gap-3">
 
                 {track ? (
                     <button
+                        type="button"
+                        aria-label={playbackLabel}
                         onClick={handleCoverClick}
                         className="block relative group"
                     >
