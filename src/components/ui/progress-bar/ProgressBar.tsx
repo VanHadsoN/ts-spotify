@@ -7,9 +7,10 @@ interface Props {
     onSeek: (time: number) => void;
     isTextDisplayed?: boolean;
     isThumbDisplayed?: boolean;
+    ariaLabel: string;
 }
 
-export function ProgressBar({ currentValue, value, progress, onSeek, isTextDisplayed, isThumbDisplayed = true }
+export function ProgressBar({ currentValue, value, progress, onSeek, ariaLabel, isTextDisplayed, isThumbDisplayed = true }
     : Props) {
     return <div className="flex items-center gap-5">
         {isTextDisplayed &&
@@ -39,9 +40,9 @@ export function ProgressBar({ currentValue, value, progress, onSeek, isTextDispl
             )}
 
             <input type="range"
+                   aria-label={ariaLabel}
                    min={0}
                    max={value}
-                   className=""
                    onChange={(e) => onSeek(Number(e.target.value))}
                    value={currentValue}
             />
