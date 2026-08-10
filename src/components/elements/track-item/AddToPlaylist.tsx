@@ -1,9 +1,9 @@
 import type { ITrack } from "@/types/track.types";
 import { Ellipsis } from "lucide-react";
 import { observer } from "mobx-react-lite";
-import {useState} from "react";
-import {CustomMenu} from "@/components/ui/custom-menu/CustomMenu.tsx";
-import {playlistStore} from "@/store/playlist.store.ts";
+import { useId, useState } from "react";
+import { CustomMenu } from "@/components/ui/custom-menu/CustomMenu.tsx";
+import { playlistStore } from "@/store/playlist.store.ts";
 import cn from "clsx";
 
 interface Props {
@@ -15,19 +15,28 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
 
     const [isShow, setIsShow] = useState(false);
     const hasPlayLists = playlistStore.playlists.length > 0;
+    const menuId = useId();
+
     return (
         <div className="relative">
             <button
                 type="button"
                 aria-label={`Add ${track.name} to playlist`}
                 aria-expanded={isShow}
+                aria-haspopup="menu"
+                aria-controls={isShow ? menuId : undefined}
                 onClick={() => setIsShow(prev => !prev)}
             >
                 <Ellipsis className="opacity-30 duration-300 hover:opacity-100" />
             </button>
 
             {isShow && (
-                <CustomMenu side="right">
+                <CustomMenu
+                    id={menuId}
+                    role={hasPlayLists ? "menu" : undefined}
+                    aria-label={`Add ${track.name} to playlist`}
+                    side="right"
+                >
                     <div className="p-1.5 space-y-1.5">
                         {hasPlayLists ? (
                             playlistStore.playlists.map(playlist => {
