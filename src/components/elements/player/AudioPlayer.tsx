@@ -87,6 +87,7 @@ export function AudioPlayerInner() {
 
             {/* ProgressBar */}
             <ProgressBar
+                ariaLabel="Playback position"
                 currentValue={musicPlayerStore.currentTime}
                 value={duration}
                 progress={musicPlayerStore.progress}
@@ -112,6 +113,7 @@ export function AudioPlayerInner() {
                 </button>
 
                 <ProgressBar
+                    ariaLabel="Volume"
                     currentValue={musicPlayerStore.volume}
                     value={100}
                     progress={musicPlayerStore.volume}
