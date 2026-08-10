@@ -19,6 +19,8 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
         <div className="relative">
             <button
                 type="button"
+                aria-label={`Add ${track.name} to playlist`}
+                aria-expanded={isShow}
                 onClick={() => setIsShow(prev => !prev)}
             >
                 <Ellipsis className="opacity-30 duration-300 hover:opacity-100" />
