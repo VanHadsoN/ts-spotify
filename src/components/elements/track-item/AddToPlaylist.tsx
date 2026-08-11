@@ -1,7 +1,7 @@
 import type { ITrack } from "@/types/track.types";
 import { Ellipsis } from "lucide-react";
 import { observer } from "mobx-react-lite";
-import { useId, useState } from "react";
+import { type KeyboardEvent, useEffect, useId, useRef, useState } from "react";
 import { CustomMenu } from "@/components/ui/custom-menu/CustomMenu.tsx";
 import { playlistStore } from "@/store/playlist.store.ts";
 import cn from "clsx";
@@ -16,6 +16,52 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
     const [isShow, setIsShow] = useState(false);
     const hasPlayLists = playlistStore.playlists.length > 0;
     const menuId = useId();
+
+    const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+    useEffect(() => {
+        if(!isShow || !hasPlayLists) return;
+
+        const frameId = requestAnimationFrame(() => {
+            itemRefs.current[0]?.focus();
+        });
+
+        return () => cancelAnimationFrame(frameId);
+    }, [isShow, hasPlayLists]);
+
+    const handleMenuKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+        const items = itemRefs.current.filter(
+            (item): item is HTMLButtonElement => item !== null,
+        );
+
+        if(items.length === 0) return;
+
+        const currentIndex = items.indexOf(
+            document.activeElement as HTMLButtonElement,
+        );
+
+        let nextIndex: number | null = null;
+
+        switch (event.key) {
+            case "ArrowDown":
+                nextIndex = (currentIndex + 1) % items.length;
+                break;
+            case "ArrowUp":
+                nextIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
+                break;
+            case "Home":
+                nextIndex = 0;
+                break;
+            case "End":
+                nextIndex = items.length - 1;
+                break;
+            default:
+                return;
+        }
+
+        event.preventDefault();
+        items[nextIndex].focus();
+    };
 
     return (
         <div className="relative">
@@ -36,6 +82,7 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
                     role={hasPlayLists ? "menu" : undefined}
                     aria-label={`Add ${track.name} to playlist`}
                     side="right"
+                    onKeyDown={handleMenuKeyDown}
                 >
                     <div className="p-1.5 space-y-1.5">
                         {hasPlayLists ? (
