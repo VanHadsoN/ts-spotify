@@ -86,10 +86,16 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
                 >
                     <div className="p-1.5 space-y-1.5">
                         {hasPlayLists ? (
-                            playlistStore.playlists.map(playlist => {
+                            playlistStore.playlists.map((playlist, index) => {
                                     const isAdded = playlistStore.isTrackInPlaylist(playlist.name, track.id);
                                     return (
                                         <button
+                                            ref={(node) => {
+                                                itemRefs.current[index] = node;
+                                            }}
+                                            role="menuitemcheckbox"
+                                            aria-checked={isAdded}
+                                            tabIndex={index === 0 ? 0 : -1}
                                             key={playlist.name}
                                             type="button"
                                             className={cn("w-full text-left transition-opacity duration-300 " +
