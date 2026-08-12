@@ -1,10 +1,11 @@
 import type { ITrack } from "@/types/track.types";
 import { Ellipsis } from "lucide-react";
 import { observer } from "mobx-react-lite";
-import { type KeyboardEvent, useEffect, useId, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useEffect, useId, useRef, useState } from "react";
 import { CustomMenu } from "@/components/ui/custom-menu/CustomMenu.tsx";
 import { playlistStore } from "@/store/playlist.store.ts";
 import cn from "clsx";
+import { useDismissibleMenu } from "@/hooks/useDismissibleMenu.ts";
 
 interface Props {
     track: ITrack;
@@ -18,6 +19,15 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
     const menuId = useId();
 
     const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+    const closeMenu = useCallback(() => {
+        setIsShow(false);
+    }, []);
+
+    const { containerRef, triggerRef } = useDismissibleMenu(
+        isShow,
+        closeMenu,
+    )
 
     useEffect(() => {
         if(!isShow || !hasPlayLists) return;
@@ -64,8 +74,9 @@ export const AddToPlaylist = observer(function AddToPlaylist({track}: Props) {
     };
 
     return (
-        <div className="relative">
+        <div ref={containerRef} className="relative">
             <button
+                ref={triggerRef}
                 type="button"
                 aria-label={`Add ${track.name} to playlist`}
                 aria-expanded={isShow}
