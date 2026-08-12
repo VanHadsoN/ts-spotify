@@ -8,9 +8,11 @@ interface Props {
     isTextDisplayed?: boolean;
     isThumbDisplayed?: boolean;
     ariaLabel: string;
+    step?: number;
+    getAriaValueText?: (value: number) => string;
 }
 
-export function ProgressBar({ currentValue, value, progress, onSeek, ariaLabel, isTextDisplayed, isThumbDisplayed = true }
+export function ProgressBar({ currentValue, value, progress, onSeek, ariaLabel, isTextDisplayed, isThumbDisplayed = true, step = 1, getAriaValueText }
     : Props) {
     return <div className="flex items-center gap-5">
         {isTextDisplayed &&
@@ -39,12 +41,15 @@ export function ProgressBar({ currentValue, value, progress, onSeek, ariaLabel, 
                 />
             )}
 
-            <input type="range"
-                   aria-label={ariaLabel}
-                   min={0}
-                   max={value}
-                   onChange={(e) => onSeek(Number(e.target.value))}
-                   value={currentValue}
+            <input
+                type="range"
+                aria-label={ariaLabel}
+                aria-valuetext={getAriaValueText?.(currentValue)}
+                min={0}
+                max={value}
+                step={step}
+                value={currentValue}
+                onChange={(e) => onSeek(Number(e.target.value))}
             />
         </div>
 
