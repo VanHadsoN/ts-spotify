@@ -16,6 +16,12 @@
 
 }
 
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
 @theme {
   --color-primary: #ffbf1d;
   --color-secondary: #F98305;
@@ -79,7 +85,6 @@ input[type="range"]::-ms-thumb {
 
 input {
   background-color: transparent;
-  outline: none;
 }
 
 .fade-in {
