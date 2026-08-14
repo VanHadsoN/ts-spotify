@@ -99,3 +99,8 @@ input {
     opacity: 1;
   }
 }
+
+.range-control:has(input[type="range"]:focus-visible) {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+}
