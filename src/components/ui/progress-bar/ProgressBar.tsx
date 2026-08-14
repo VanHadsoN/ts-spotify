@@ -22,7 +22,7 @@ export function ProgressBar({ currentValue, value, progress, onSeek, ariaLabel, 
         }
 
         <div
-            className="bg-white/20 w-full rounded relative h-1"
+            className="range-control bg-white/20 w-full rounded relative h-1"
         >
             <div className="absolute top-0 left-0 h-1 rounded bg-gradient-to-r
                     from-primary to-secondary"
