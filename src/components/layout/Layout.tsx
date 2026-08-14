@@ -7,12 +7,24 @@ export default function Layout ({ children }: PropsWithChildren<unknown>) {
 
     return (
         <>
-            <div className='min-h-screen h-full grid grid-cols-[1fr_3.5fr_1.1fr] pb-20'>
-                <LeftSidebar />
-                <main className='p-8 py-layout'>
+            <div
+                className="
+                    grid min-h-screen grid-cols-1 pb-28
+                    md:grid-cols-[15rem_minmax(0.1fr)]
+                    xl:grid-cols-[15rem_minmax(0,1fr)_18rem]
+                "
+            >
+                <div className="hidden md:block">
+                    <LeftSidebar />
+                </div>
+
+                <main className="min-w-0 px-4 sm:px-6 md:p-8">
                     {children}
                 </main>
-                <RightSidebar />
+
+                <div className="hidden xl:block">
+                    <RightSidebar />
+                </div>
             </div>
             <AudioPlayer />
         </>
