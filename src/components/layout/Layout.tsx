@@ -1,12 +1,15 @@
 import type { PropsWithChildren } from "react";
-import {RightSidebar} from "@/components/layout/right-sidebar/RightSidebar.tsx";
-import {LeftSidebar} from "@/components/layout/left-sidebar/LeftSidebar.tsx";
-import {AudioPlayer} from "@/components/elements/player/AudioPlayer.tsx";
+import { RightSidebar } from "@/components/layout/right-sidebar/RightSidebar.tsx";
+import { LeftSidebar } from "@/components/layout/left-sidebar/LeftSidebar.tsx";
+import { AudioPlayer } from "@/components/elements/player/AudioPlayer.tsx";
+import { MobileNavigation } from "@/components/layout/mobile-navigation/MobileNavigation.tsx";
 
 export default function Layout ({ children }: PropsWithChildren<unknown>) {
 
     return (
         <>
+            <MobileNavigation />
+
             <div
                 className="
                     grid min-h-screen grid-cols-1 pb-28
